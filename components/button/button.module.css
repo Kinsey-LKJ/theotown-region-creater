@@ -1,0 +1,23 @@
+.ctn {
+    -webkit-appearance: initial;
+    border: none;
+    background-color: var(--theotown-creater-primary);
+    color: #fff;
+    padding: 5px 18px;
+    position: relative;
+    z-index: 5;
+    text-decoration: none;
+    margin: 4px;
+    box-shadow: 0px 4px 0 0 var(--theotown-creater-primary-shadows),4px 0px 0 0 var(--theotown-creater-primary-shadows),-4px 0px 0 0 var(--theotown-creater-primary-bright),0px -4px 0 0 var(--theotown-creater-primary-bright);
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+
+.ctn:active {
+    box-shadow: 0px 4px 0 0 var(--theotown-creater-primary-shadows),4px 0px 0 0 var(--theotown-creater-primary-shadows),-4px 0px 0 0 var(--theotown-creater-primary-shadows),0px -4px 0 0 var(--theotown-creater-primary-shadows);
+    transform: translateY(4px);
+}
+
+
+

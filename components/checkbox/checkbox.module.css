@@ -1,0 +1,48 @@
+.ctn {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+}
+
+.ctn input {
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+}
+
+.ctn,.ctn *{
+  cursor: pointer;
+}
+
+.ctn .checkBoxIcon {
+  width: 24px;
+  height: 24px;
+  margin: 4px 12px 4px 4px;
+  background-color: var(--theotown-creater-primary-dark);
+  left: 0;
+  box-shadow: 0px 4px 0 0 var(--input-border), 4px 0px 0 0 var(--input-border),
+    -4px 0px 0 0 var(--input-border), 0px -4px 0 0 var(--input-border),
+    0px -3px 0 0 var(--theotown-creater-primary-inline-shadow) inset,
+    3px 0px 0 0 var(--theotown-creater-primary-inline-shadow) inset,
+    0px 3px 0 0 var(--theotown-creater-primary-inline-shadow) inset,
+    -3px 0px 0 0 var(--theotown-creater-primary-inline-shadow) inset;
+  --input-border: var(--theotown-creater-primary-bright);
+}
+
+
+.checkedElement {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  left: 10px;
+  background-color: var(--theotown-creater-secondary);
+  box-shadow: 0px 2px 0 0 var(--theotown-creater-secondary-shadows),2px 0px 0 0 var(--theotown-creater-secondary-shadows),-2px 0px 0 0 var(--theotown-creater-secondary-bright),0px -2px 0 0 var(--theotown-creater-secondary-bright);
+  pointer-events: none;
+  visibility: hidden;
+  
+}
+
+.ctn input:checked + .checkedElement {
+  visibility: visible !important;
+}

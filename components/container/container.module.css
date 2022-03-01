@@ -1,0 +1,4 @@
+.ctn {
+    background-color: var(--theotown-creater-primary);
+    box-shadow: 0px 4px 0 0 var(--theotown-creater-primary-shadows),4px 0px 0 0 var(--theotown-creater-primary-shadows),-4px 0px 0 0 var(--theotown-creater-primary-bright),0px -4px 0 0 var(--theotown-creater-primary-bright);
+}
