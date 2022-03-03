@@ -5,8 +5,8 @@ const CheckBox = ({ children ,field = uuidv4()}) => {
     <div className={styles.ctn} >
       <input type="checkbox" id={`components-name-${field}`} />
       <div className={styles.checkedElement}></div>
-      <label className={styles.checkBoxIcon} for={`components-name-${field}`}></label>
-      <label for={`components-name-${field}`}> {children}</label>
+      <label className={styles.checkBoxIcon} htmlFor={`components-name-${field}`}></label>
+      <label htmlFor={`components-name-${field}`}> {children}</label>
     </div>
   );
 };

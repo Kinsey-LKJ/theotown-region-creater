@@ -54,10 +54,15 @@
   position: relative;
 }
 
-.scales {
+.markes {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin-top: 8px;
+}
+
+.markesItem:global(.active) {
+  color: var(--theotown-creater-secondary);
 }
 
 .label {

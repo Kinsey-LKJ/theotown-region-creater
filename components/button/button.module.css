@@ -1,21 +1,21 @@
 .ctn {
     -webkit-appearance: initial;
     border: none;
-    background-color: var(--theotown-creater-primary);
-    color: #fff;
+    background-color: var(--theotown-creater-secondary);
+    color: var(--theotown-creater-orange-0);
     padding: 5px 18px;
     position: relative;
     z-index: 5;
     text-decoration: none;
     margin: 4px;
-    box-shadow: 0px 4px 0 0 var(--theotown-creater-primary-shadows),4px 0px 0 0 var(--theotown-creater-primary-shadows),-4px 0px 0 0 var(--theotown-creater-primary-bright),0px -4px 0 0 var(--theotown-creater-primary-bright);
+    box-shadow: 0px 4px 0 0 var(--theotown-creater-secondary-shadows),4px 0px 0 0 var(--theotown-creater-secondary-shadows),-4px 0px 0 0 var(--theotown-creater-secondary-bright),0px -4px 0 0 var(--theotown-creater-secondary-bright);
     cursor: pointer;
     display: block;
     text-align: center;
 }
 
 .ctn:active {
-    box-shadow: 0px 4px 0 0 var(--theotown-creater-primary-shadows),4px 0px 0 0 var(--theotown-creater-primary-shadows),-4px 0px 0 0 var(--theotown-creater-primary-shadows),0px -4px 0 0 var(--theotown-creater-primary-shadows);
+    box-shadow: 0px 4px 0 0 var(--theotown-creater-secondary-shadows),4px 0px 0 0 var(--theotown-creater-secondary-shadows),-4px 0px 0 0 var(--theotown-creater-secondary-shadows),0px -4px 0 0 var(--theotown-creater-secondary-shadows);
     transform: translateY(4px);
 }
 
