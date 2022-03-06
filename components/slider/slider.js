@@ -44,7 +44,7 @@ const Slider = ({ value, max = 8, min = 1, label, onChange, markes }) => {
       <div className={styles.markes}>
         {createArray(min, max).map((item, index) => {
           return (
-            <div key={item} className={`${styles.markesItem} ${item === value ? 'active' : ''}`}
+            <div  className={`${styles.markesItem} ${item === value ? 'active' : ''}`}
             >
               {index === 0 ? min : item}
             </div>

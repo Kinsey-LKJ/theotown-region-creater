@@ -1,6 +1,6 @@
 import styles from "./input.module.css";
 
-const Input = ({ placeholder, label }) => {
+const Input = ({value, placeholder, label ,onChange}) => {
   return (
     <div>
         {
@@ -11,6 +11,12 @@ const Input = ({ placeholder, label }) => {
         className={styles.input}
         type="text"
         placeholder={placeholder}
+        value={value}
+        onChange={
+          (e) => {
+            onChange(e.target.value)
+          }
+        }
       />
     </div>
   );

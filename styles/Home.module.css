@@ -1,9 +1,30 @@
 .container {
-    max-width: 480px;
-    width: calc(100vw - 48px);
-    margin: 0 auto;
+  max-width: 480px;
+  width: calc(100vw - 48px);
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 32px;
+  color: white;
+  padding: 24px;
+}
+
+.checkBoxs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.seedInputBox {
     display: grid;
-    grid-gap: 20px;
-    color: white;
-    padding: 40px;
+    grid-gap: 8px;
+    grid-template-columns: auto 36px;
+    align-items: flex-end;
+}
+
+.seedDice {
+    cursor: pointer;
+}
+
+.seedDice:active{
+    transform: translateY(2px);
 }
