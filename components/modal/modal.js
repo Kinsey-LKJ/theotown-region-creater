@@ -12,7 +12,7 @@ import Typed from "typed.js";
 import Button from "../button/button";
 import styles from "./modal.module.css";
 import Container from "../container/container";
-const Modal = ({ isOpen, onClose, children, typed }, ref) => {
+const Modal = ({ isOpen, onClose, children, typed ,contentClassName}, ref) => {
   //   if (!isOpen) {
   //     return null;
   //   }
@@ -68,7 +68,7 @@ const Modal = ({ isOpen, onClose, children, typed }, ref) => {
             "--modal-content-offset-y": "-100px",
           }}
         >
-          <Container className={`${styles.content} modal-content`}>
+          <Container className={`${styles.content} modal-content ${contentClassName}`}>
 
             <div>
             <div ref={el}>{!typed?.strings ? children : ""}</div>

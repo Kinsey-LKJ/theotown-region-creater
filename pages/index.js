@@ -83,6 +83,7 @@ export default function Home() {
             typeSpeed:10
           }
         }
+        contentClassName={styles.wellcomeModal}
       >
         Hello
       </Modal>
