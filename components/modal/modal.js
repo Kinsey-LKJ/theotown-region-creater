@@ -34,7 +34,7 @@ const Modal = ({ isOpen, onClose, children, typed ,contentClassName}, ref) => {
   const ty = null
 
   useEffect(() => {
-    if (typed.strings && isBrowser) {
+    if (typed?.strings && isBrowser) {
 
       const options = typed
 

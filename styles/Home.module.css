@@ -9,8 +9,8 @@
 }
 
 .wellcomeModal{
-    width: 1000px;
-    height: 1000px;
+    width: 400px;
+    height: 400px;
 }
 @media only screen and (max-width: 768px) {
     .wellcomeModal{
