@@ -1,10 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Button from "../components/button/button";
 import CheckBox from "../components/checkbox/checkbox";
 import Container from "../components/container/container";
 import Input from "../components/input/input";
+import Modal from "../components/modal/modal";
 import Slider from "../components/slider/slider";
 import styles from "../styles/Home.module.css";
 
@@ -16,6 +17,7 @@ export default function Home() {
       setCitySize(value);
     }
   };
+  const [modalOpen, setModalOpen] = useState(false);
 
   const changeRegionSizeState = (value) => {
     if (value % 8 === 0) {
@@ -23,6 +25,7 @@ export default function Home() {
       setRegionSize(value);
     }
   };
+
   return (
     <Container className={styles.container}>
       <h1>TheoTown 地图创建工具</h1>
@@ -59,6 +62,30 @@ export default function Home() {
         }}
       ></Slider>
       <Button>立即生成</Button>
+
+      <Button
+        onClick={() => {
+          setModalOpen(true);
+        }}
+      >
+        显示弹窗
+      </Button>
+      <Modal
+        onClose={() => {
+          setModalOpen(false);
+        }}
+        isOpen={modalOpen}
+        typed={
+          {
+            strings:['这是一个可以生成用于在 theotown 的控制台中新建地图的代码的工具，请确保已经打开实验室功能。'],
+            showCursor:true,
+            cursorChar:'->',
+            typeSpeed:10
+          }
+        }
+      >
+        Hello
+      </Modal>
     </Container>
   );
 }
