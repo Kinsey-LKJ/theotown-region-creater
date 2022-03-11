@@ -12,17 +12,16 @@ import Typed from "typed.js";
 import Button from "../button/button";
 import styles from "./modal.module.css";
 import Container from "../container/container";
-const Modal = ({ isOpen, onClose, children, typed ,contentClassName}, ref) => {
+const Modal = ({
+  isOpen,
+  onClose = () => {},
+  children,
+  typed,
+  contentClassName,
+}) => {
   //   if (!isOpen) {
   //     return null;
   //   }
-
-  const closeOnEsccapeKeyDown = (e) => {
-    if (e.charCode || e.keyCode === 27) {
-      onClose();
-    }
-  };
-
 
   const [isBrowser, setIsBrowser] = useState(false);
 
@@ -31,14 +30,13 @@ const Modal = ({ isOpen, onClose, children, typed ,contentClassName}, ref) => {
   }, []);
 
   const el = useRef(null);
-  const ty = null
+  const ty = null;
 
   useEffect(() => {
     if (typed?.strings && isBrowser) {
+      const options = typed;
 
-      const options = typed
-
-     ty = new Typed(el.current, options);
+      ty = new Typed(el.current, options);
     }
     // return () => {
     //   typedRef.destroy();
@@ -52,6 +50,11 @@ const Modal = ({ isOpen, onClose, children, typed ,contentClassName}, ref) => {
     };
   }, []);
 
+  const closeOnEsccapeKeyDown = (e) => {
+    if (e.charCode || e.keyCode === 27) {
+      onClose();
+    }
+  };
 
   if (isBrowser) {
     return ReactDOM.createPortal(
@@ -68,10 +71,11 @@ const Modal = ({ isOpen, onClose, children, typed ,contentClassName}, ref) => {
             "--modal-content-offset-y": "-100px",
           }}
         >
-          <Container className={`${styles.content} modal-content ${contentClassName}`}>
-
+          <Container
+            className={`${styles.content} modal-content ${contentClassName}`}
+          >
             <div>
-            <div ref={el}>{!typed?.strings ? children : ""}</div>
+              <div ref={el}>{!typed?.strings ? children : ""}</div>
             </div>
 
             <div>
@@ -94,6 +98,53 @@ const Modal = ({ isOpen, onClose, children, typed ,contentClassName}, ref) => {
     return null;
   }
 };
+ Modal.confirm = ({ ...props }) => {
+  let div = document.createElement("div");
+  let currentConfig = Object.assign({}, props);
+  console.log(currentConfig);
+  document.body.appendChild(div);
 
+  const ModalMethod = HOCModal(Modal);
+  const destroy = () => {
+    const unmountResult = ReactDOM.unmountComponentAtNode(div);
+    if (unmountResult && div.parentNode) {
+      div.parentNode.removeChild(div);
+    }
+  };
 
-export default Modal
+  const render = (config) => {
+    ReactDOM.render(<ModalMethod destroy={destroy} {...config} />, div);
+  };
+
+  render(currentConfig);
+  return Modal.confirm;
+};
+
+const HOCModal = (Component) => {
+  return ({ onClose = () => {}, text, typed, contentClassName, destroy }) => {
+    const [modalMethodIsOpen, setModalMethodIsOpen] = useState(false);
+
+    useEffect(() => {
+      setTimeout(() => {
+        setModalMethodIsOpen(true)
+      },1)
+    }, []);
+
+    const onClose2 = () => {
+      onClose();
+      destroy();
+    };
+
+    return (
+      <Component
+        isOpen={modalMethodIsOpen}
+        onClose={onClose2}
+        children={text}
+        typed={typed}
+        contentClassName={contentClassName}
+      ></Component>
+    );
+  };
+};
+
+export default Modal;

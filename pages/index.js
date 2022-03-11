@@ -71,7 +71,34 @@ export default function Home() {
       >
         显示弹窗
       </Button>
-
+      <Button
+        onClick={() => {
+          Modal.confirm({
+            text: "123",
+            typed: {
+              strings: [
+                "这是一个可以生成用于在 theotown 的控制台中新建地图的代码的工具，请确保已经打开实验室功能。",
+              ],
+              showCursor: true,
+              cursorChar: "->",
+              typeSpeed: 10,
+            },
+            onClose: () => {
+              Modal.confirm({
+                text: "123",
+                typed: {
+                  strings: [
+                    "如果要使用控制台，请参考...",
+                  ],
+                  showCursor: true,
+                  cursorChar: "->",
+                  typeSpeed: 10,
+                },
+              });
+            },
+          });
+        }}
+      >测试Modal.mechod</Button>
       <Modal
         onClose={() => {
           setModalOpen(false);
