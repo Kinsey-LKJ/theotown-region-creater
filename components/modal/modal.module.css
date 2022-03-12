@@ -1,0 +1,36 @@
+.ctn {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .ctn:global(.exit) {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+} */
+
+
+.mask {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.content {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  justify-content: space-between;
+}
+

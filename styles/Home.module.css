@@ -19,6 +19,9 @@
     grid-gap: 8px;
     grid-template-columns: auto 36px;
     align-items: flex-end;
+    grid-gap: 20px;
+    color: white;
+    padding: 40px;
 }
 
 .seedDice {
@@ -27,4 +30,16 @@
 
 .seedDice:active{
     transform: translateY(2px);
+}
+   
+
+.wellcomeModal{
+    width: 400px;
+    height: 400px;
+}
+@media only screen and (max-width: 768px) {
+    .wellcomeModal{
+        width: calc(100vw - 64px);
+        height: calc(100vh - 64px);
+    }
 }
