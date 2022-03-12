@@ -3,7 +3,7 @@
   font-family: "myFirstFont";
   -webkit-appearance: initial;
   border: none;
-  background-color: var(--theotown-creater-primary-dark);
+  background-color: var(--theotown-creater-secondary-dark);
   color: #fff;
   padding: 5px 18px;
   position: relative;
@@ -14,14 +14,14 @@
     4px 0px 0 0 var(--input-border),
     -4px 0px 0 0 var(--input-border),
     0px -4px 0 0 var(--input-border),
-    0px -3px 0 0 var(--theotown-creater-primary-inline-shadow) inset,
-    3px 0px 0 0 var(--theotown-creater-primary-inline-shadow) inset,
-    0px 3px 0 0 var(--theotown-creater-primary-inline-shadow) inset,
-    -3px 0px 0 0 var(--theotown-creater-primary-inline-shadow) inset;
+    0px -3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
+    3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
+    0px 3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
+    -3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset;
   cursor: pointer;
   outline: none;
   font-size: 16px;
-  --input-border: var(--theotown-creater-primary-bright);
+  --input-border: var(--theotown-creater-secondary-bright);
 }
 
 .input::-webkit-input-placeholder {
@@ -35,7 +35,7 @@
 }
 
 .input:focus {
-    --input-border:var(--theotown-creater-secondary)
+    --input-border:var(--theotown-creater-primary)
 }
 
 .label {

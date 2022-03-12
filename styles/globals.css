@@ -13,6 +13,7 @@ body {
   padding: 40px 0;
   box-sizing: border-box;
   overflow-x: hidden;
+  line-height: 170%;
 }
 
 :root {
@@ -31,23 +32,23 @@ body {
   --theotown-creater-orange-2:#ffe8bf;
   --theotown-creater-orange-3:#ffdaa0;
   --theotown-creater-orange-4:#ffc980;
-  --theotown-creater-orange-5:#ffb660;
+  --theotown-creater-orange-5:#ffb158;
   --theotown-creater-orange-6:#d5904e;
   --theotown-creater-orange-7:#aa6d3d;
   --theotown-creater-orange-8:#804d2c;
   --theotown-creater-orange-9:#55301d;
 
-  --theotown-creater-primary:var(--theotown-creater-blue-5);
-  --theotown-creater-primary-dark:var(--theotown-creater-blue-8);
-  --theotown-creater-primary-shadows:var(--theotown-creater-blue-7);
-  --theotown-creater-primary-inline-shadow:var(--theotown-creater-blue-9);
-  --theotown-creater-primary-bright:var(--theotown-creater-blue-2);
+  --theotown-creater-secondary:var(--theotown-creater-blue-5);
+  --theotown-creater-secondary-dark:var(--theotown-creater-blue-8);
+  --theotown-creater-secondary-shadows:var(--theotown-creater-blue-7);
+  --theotown-creater-secondary-inline-shadow:var(--theotown-creater-blue-9);
+  --theotown-creater-secondary-bright:var(--theotown-creater-blue-2);
 
-  --theotown-creater-secondary:var(--theotown-creater-orange-5);
-  --theotown-creater-secondary-dark:var(--theotown-creater-orange-8);
-  --theotown-creater-secondary-shadows:var(--theotown-creater-orange-7);
-  --theotown-creater-secondary-inline-shadow:var(--theotown-creater-orange-9);
-  --theotown-creater-secondary-bright:var(--theotown-creater-orange-2);
+  --theotown-creater-primary:var(--theotown-creater-orange-5);
+  --theotown-creater-primary-dark:var(--theotown-creater-orange-8);
+  --theotown-creater-primary-shadows:var(--theotown-creater-orange-7);
+  --theotown-creater-primary-inline-shadow:var(--theotown-creater-orange-9);
+  --theotown-creater-primary-bright:var(--theotown-creater-orange-2);
 }
 
 a {
@@ -59,6 +60,10 @@ a {
   box-sizing: border-box;
 }
 
+
+h1 {
+  line-height: 140%;
+}
 
 @font-face {
   font-family: "myFirstFont";

@@ -14,10 +14,15 @@ import styles from "./modal.module.css";
 import Container from "../container/container";
 const Modal = ({
   isOpen,
-  onClose = () => {},
+  onOk = () => {},
+  onCancel = () => {},
+  okButtonText = '确定',
+  cancelButtonText = '取消', 
   children,
   typed,
   contentClassName,
+  type,
+  animationDuration = 300,
 }) => {
   //   if (!isOpen) {
   //     return null;
@@ -52,7 +57,7 @@ const Modal = ({
 
   const closeOnEsccapeKeyDown = (e) => {
     if (e.charCode || e.keyCode === 27) {
-      onClose();
+      onOk();
     }
   };
 
@@ -61,7 +66,7 @@ const Modal = ({
       <CSSTransition
         in={isOpen}
         classNames="modal-fade"
-        timeout={300}
+        timeout={animationDuration}
         unmountOnExit
       >
         <div
@@ -74,22 +79,47 @@ const Modal = ({
           <Container
             className={`${styles.content} modal-content ${contentClassName}`}
           >
-            <div>
+            <div style={{
+              overflowY:'scroll'
+            }}>
               <div ref={el}>{!typed?.strings ? children : ""}</div>
             </div>
 
-            <div>
-              <Button
-                onClick={() => {
-                  onClose();
-                }}
-              >
-                知道了
-              </Button>
-            </div>
+            {type === "info" ||
+            type === "success" ||
+            type === "error" ||
+            type === "warning" ? (
+              <div className={styles.footer}>
+                <Button
+                  onClick={() => {
+                    onOk();
+                  }}
+                >
+                  {okButtonText}
+                </Button>
+              </div>
+            ) : (
+              <div className={styles.footer}>
+                <Button
+                  onClick={() => {
+                    onOk();
+                  }}
+                >
+                  {okButtonText}
+                </Button>
+                <Button
+                  onClick={() => {
+                    onCancel();
+                  }}
+                  type="secondary"
+                >
+                  {cancelButtonText}
+                </Button>
+              </div>
+            )}
           </Container>
 
-          <div className={styles.mask} onClick={onClose}></div>
+          <div className={styles.mask} onClick={onCancel}></div>
         </div>
       </CSSTransition>,
       document.body
@@ -98,50 +128,101 @@ const Modal = ({
     return null;
   }
 };
- Modal.confirm = ({ ...props }) => {
-  let div = document.createElement("div");
-  let currentConfig = Object.assign({}, props);
-  console.log(currentConfig);
-  document.body.appendChild(div);
 
-  const ModalMethod = HOCModal(Modal);
-  const destroy = () => {
-    const unmountResult = ReactDOM.unmountComponentAtNode(div);
-    if (unmountResult && div.parentNode) {
-      div.parentNode.removeChild(div);
-    }
+["info", "success", "error", "warning", "confirm"].forEach((item) => {
+  Modal[item] = ({ ...props }) => {
+    let div = document.createElement("div");
+    let currentConfig = Object.assign({}, props);
+    console.log(currentConfig);
+    document.body.appendChild(div);
+
+    const ModalMethod = HOCModal(Modal);
+    const destroy = () => {
+      const unmountResult = ReactDOM.unmountComponentAtNode(div);
+      if (unmountResult && div.parentNode) {
+        div.parentNode.removeChild(div);
+      }
+    };
+
+    const render = (config) => {
+      ReactDOM.render(
+        <ModalMethod destroy={destroy} {...config} type={item} />,
+        div
+      );
+    };
+
+    render(currentConfig);
+    return {
+      destroy: destroy,
+    };
   };
+});
+// Modal.confirm = ({ ...props }) => {
+//   let div = document.createElement("div");
+//   let currentConfig = Object.assign({}, props);
+//   console.log(currentConfig);
+//   document.body.appendChild(div);
 
-  const render = (config) => {
-    ReactDOM.render(<ModalMethod destroy={destroy} {...config} />, div);
-  };
+//   const ModalMethod = HOCModal(Modal);
+//   const destroy = () => {
+//     const unmountResult = ReactDOM.unmountComponentAtNode(div);
+//     if (unmountResult && div.parentNode) {
+//       div.parentNode.removeChild(div);
+//     }
+//   };
 
-  render(currentConfig);
-  return Modal.confirm;
-};
+//   const render = (config) => {
+//     ReactDOM.render(<ModalMethod destroy={destroy} {...config} />, div);
+//   };
+
+//   render(currentConfig);
+//   return Modal.confirm;
+// };
 
 const HOCModal = (Component) => {
-  return ({ onClose = () => {}, text, typed, contentClassName, destroy }) => {
+  return ({
+    onOk = () => {},
+    onCancel = () => {},
+    text,
+    typed,
+    contentClassName,
+    destroy,
+    type,
+    animationDuration = 300,
+    ...props
+  }) => {
     const [modalMethodIsOpen, setModalMethodIsOpen] = useState(false);
-
     useEffect(() => {
       setTimeout(() => {
-        setModalMethodIsOpen(true)
-      },1)
+        setModalMethodIsOpen(true);
+      }, 1);
     }, []);
 
-    const onClose2 = () => {
-      onClose();
-      destroy();
+    const onOk2 = () => {
+      setModalMethodIsOpen(false);
+      onOk();
+      setTimeout(() => {
+        destroy();
+      }, animationDuration);
+    };
+    const onCancel2 = () => {
+      setModalMethodIsOpen(false);
+      onCancel();
+      setTimeout(() => {
+        destroy();
+      }, animationDuration);
     };
 
     return (
       <Component
         isOpen={modalMethodIsOpen}
-        onClose={onClose2}
+        onOk={onOk2}
+        onCancel={onCancel2}
         children={text}
         typed={typed}
         contentClassName={contentClassName}
+        type={type}
+        {...props}
       ></Component>
     );
   };

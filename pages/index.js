@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import Head from "next/head";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Button from "../components/button/button";
 import CheckBox from "../components/checkbox/checkbox";
 import Container from "../components/container/container";
@@ -11,13 +11,40 @@ import Slider from "../components/slider/slider";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  useEffect(() => {
+    Modal.info({
+      text: "123",
+      typed: {
+        strings: [
+          "这是一个可以生成用于在 theotown 的控制台中新建地图的代码的工具，请确保已经打开实验室功能。",
+        ],
+        showCursor: true,
+        cursorChar: "->",
+        typeSpeed: 10,
+      },
+      okButtonText: "我知道了",
+      onOk: () => {
+        Modal.info({
+          text: "123",
+          typed: {
+            strings: ["如果要使用控制台，请参考..."],
+            showCursor: true,
+            cursorChar: "->",
+            typeSpeed: 10,
+          },
+          okButtonText: "我知道了",
+        });
+      },
+    });
+  }, []);
   const [seedValue, setSeedValue] = useState("");
   const [desert, setDesert] = useState(false);
-  const [terrain, setTerrain] = useState(false)
-  const [trees, setTrees] = useState(false)
-  const [decoration, setDecoration] = useState(false)
+  const [terrain, setTerrain] = useState(false);
+  const [trees, setTrees] = useState(false);
+  const [decoration, setDecoration] = useState(false);
   const [citySize, setCitySize] = useState(1);
   const [regionSize, setRegionSize] = useState(8);
+
   const changeSeedValue = (value) => {
     setSeedValue(value);
   };
@@ -35,7 +62,6 @@ export default function Home() {
     }
   };
 
-
   const rondomSeed = (number) => {
     let arr = new Array();
     let arr1 = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
@@ -45,6 +71,17 @@ export default function Home() {
       arr[i] = arr1[n];
     }
     setSeedValue(arr.join(""));
+  };
+
+  const getMap = (regionSize, citySize) => {
+    let array = [];
+    let a = regionSize / citySize;
+    for (let i = 0; i < a; i++) {
+      for (let j = 0; j < a; j++) {
+        array.push([i * citySize, j * citySize, citySize]);
+      }
+    }
+    return array.join(", ");
   };
   return (
     <Container className={styles.container}>
@@ -64,7 +101,7 @@ export default function Home() {
           xmlns="http://www.w3.org/2000/svg"
           className={styles.seedDice}
           onClick={() => {
-            rondomSeed(10)
+            rondomSeed(10);
           }}
         >
           <path
@@ -101,10 +138,18 @@ export default function Home() {
       </div>
 
       <div className={styles.checkBoxs}>
-        <CheckBox checked={trees} onChange={setTrees}>开启树木</CheckBox>
-        <CheckBox>开启装饰</CheckBox>
-        <CheckBox>开启沙子</CheckBox>
-        <CheckBox>开启山坡</CheckBox>
+        <CheckBox checked={trees} onChange={setTrees}>
+          开启树木
+        </CheckBox>
+        <CheckBox checked={decoration} onChange={setDecoration}>
+          开启装饰
+        </CheckBox>
+        <CheckBox checked={desert} onChange={setDesert}>
+          开启沙漠
+        </CheckBox>
+        <CheckBox checked={terrain} onChange={setTerrain}>
+          开启地形
+        </CheckBox>
       </div>
 
       <Slider
@@ -136,57 +181,38 @@ export default function Home() {
           64: 64,
         }}
       ></Slider>
-      <Button>立即生成</Button>
-
       <Button
         onClick={() => {
           setModalOpen(true);
         }}
       >
-        显示弹窗
+        立即生成
       </Button>
-      <Button
-        onClick={() => {
-          Modal.confirm({
-            text: "123",
-            typed: {
-              strings: [
-                "这是一个可以生成用于在 theotown 的控制台中新建地图的代码的工具，请确保已经打开实验室功能。",
-              ],
-              showCursor: true,
-              cursorChar: "->",
-              typeSpeed: 10,
-            },
-            onClose: () => {
-              Modal.confirm({
-                text: "123",
-                typed: {
-                  strings: [
-                    "如果要使用控制台，请参考...",
-                  ],
-                  showCursor: true,
-                  cursorChar: "->",
-                  typeSpeed: 10,
-                },
-              });
-            },
-          });
-        }}
-      >测试Modal.mechod</Button>
+
       <Modal
-        onClose={() => {
+        onCancel={() => {
           setModalOpen(false);
         }}
         isOpen={modalOpen}
         typed={{
           strings: [
-            "这是一个可以生成用于在 theotown 的控制台中新建地图的代码的工具，请确保已经打开实验室功能。",
+            JSON.stringify({
+              seed: seedValue,
+              desert: desert,
+              terrain: terrain,
+              trees: trees,
+              decoration: decoration,
+              size: regionSize,
+              maps: getMap(regionSize, citySize),
+            }),
           ],
           showCursor: true,
           cursorChar: "->",
-          typeSpeed: 10,
+          typeSpeed: 4,
         }}
-        contentClassName={styles.wellcomeModal}
+        okButtonText='复制到剪贴板'
+        cancelButtonText="关闭"
+        contentClassName={styles.codeModal}
       >
         Hello
       </Modal>

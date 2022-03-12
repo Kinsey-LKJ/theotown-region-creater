@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 /* .ctn:global(.exit) {
@@ -32,5 +33,21 @@
   width: 400px;
   height: 400px;
   justify-content: space-between;
+  overflow-y: scroll;
+}
+
+.footer {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-gap:12px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.096);
+}
+
+@media only screen and (max-width: 768px) {
+  .content{
+      width: calc(100vw - 64px);
+      height: calc(100vh - 64px);
+  }
 }
 
