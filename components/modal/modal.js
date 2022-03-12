@@ -36,13 +36,13 @@ const Modal = ({
   }, []);
 
   const el = useRef(null);
-  const ty = null;
+  const ty = useRef(null);
 
   useEffect(() => {
     if (typed?.strings && isBrowser) {
       const options = typed;
 
-      ty = new Typed(el.current, options);
+      ty.current = new Typed(el.current, options);
     }
     // return () => {
     //   typedRef.destroy();
