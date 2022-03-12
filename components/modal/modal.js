@@ -187,7 +187,7 @@ const Modal = ({
 // };
 
 const HOCModal = (Component) => {
-  return ({
+  return function WarpComponent ({
     onOk = () => {},
     onCancel = () => {},
     text,
@@ -197,7 +197,7 @@ const HOCModal = (Component) => {
     type,
     animationDuration = 300,
     ...props
-  }) => {
+  })  {
     const [modalMethodIsOpen, setModalMethodIsOpen] = useState(false);
     useEffect(() => {
       setTimeout(() => {
