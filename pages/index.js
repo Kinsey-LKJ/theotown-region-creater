@@ -8,6 +8,7 @@ import Container from "../components/container/container";
 import Input from "../components/input/input";
 import Modal from "../components/modal/modal";
 import Slider from "../components/slider/slider";
+import CopyToClipboard from "react-copy-to-clipboard";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -37,6 +38,7 @@ export default function Home() {
       },
     });
   }, []);
+  const [name, setNameValue] = useState("");
   const [seedValue, setSeedValue] = useState("");
   const [desert, setDesert] = useState(false);
   const [terrain, setTerrain] = useState(false);
@@ -45,9 +47,6 @@ export default function Home() {
   const [citySize, setCitySize] = useState(1);
   const [regionSize, setRegionSize] = useState(8);
 
-  const changeSeedValue = (value) => {
-    setSeedValue(value);
-  };
   const changeCitySizeState = (value) => {
     if (value === 1 || value === 2 || value === 4 || value === 8) {
       setCitySize(value);
@@ -83,13 +82,30 @@ export default function Home() {
     }
     return array.join(", ");
   };
+
+  const code = `cr:${JSON.stringify({
+    name: name === "" ? "未命名区域" : name,
+    seed: seedValue,
+    desert: desert,
+    terrain: terrain,
+    trees: trees,
+    decoration: decoration,
+    size: regionSize,
+    maps: getMap(regionSize, citySize),
+  })}`;
   return (
     <Container className={styles.container}>
       <h1>TheoTown 地图创建工具</h1>
+      <Input
+        value={name}
+        onChange={setNameValue}
+        placeholder="请输入区域名称"
+        label="区域名称"
+      ></Input>
       <div className={styles.seedInputBox}>
         <Input
           value={seedValue}
-          onChange={changeSeedValue}
+          onChange={setSeedValue}
           placeholder={"请输入种子"}
           label="种子"
         ></Input>
@@ -193,24 +209,29 @@ export default function Home() {
         onCancel={() => {
           setModalOpen(false);
         }}
+        footer={
+          <>
+            <CopyToClipboard text={code}>
+              <Button>复制到剪贴板</Button>
+            </CopyToClipboard>
+            <Button
+              onClick={() => {
+                setModalOpen(false);
+              }}
+              type="secondary"
+            >
+              关闭
+            </Button>
+          </>
+        }
         isOpen={modalOpen}
         typed={{
-          strings: [
-            JSON.stringify({
-              seed: seedValue,
-              desert: desert,
-              terrain: terrain,
-              trees: trees,
-              decoration: decoration,
-              size: regionSize,
-              maps: getMap(regionSize, citySize),
-            }),
-          ],
+          strings: [code],
           showCursor: true,
           cursorChar: "->",
           typeSpeed: 4,
         }}
-        okButtonText='复制到剪贴板'
+        okButtonText="复制到剪贴板4444"
         cancelButtonText="关闭"
         contentClassName={styles.codeModal}
       >

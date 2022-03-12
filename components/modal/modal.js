@@ -16,13 +16,14 @@ const Modal = ({
   isOpen,
   onOk = () => {},
   onCancel = () => {},
-  okButtonText = '确定',
-  cancelButtonText = '取消', 
+  okButtonText = "确定",
+  cancelButtonText = "取消",
   children,
   typed,
   contentClassName,
   type,
   animationDuration = 300,
+  footer,
 }) => {
   //   if (!isOpen) {
   //     return null;
@@ -79,17 +80,21 @@ const Modal = ({
           <Container
             className={`${styles.content} modal-content ${contentClassName}`}
           >
-            <div style={{
-              overflowY:'scroll'
-            }}>
+            <div
+              style={{
+                overflowY: "scroll",
+              }}
+            >
               <div ref={el}>{!typed?.strings ? children : ""}</div>
             </div>
 
-            {type === "info" ||
-            type === "success" ||
-            type === "error" ||
-            type === "warning" ? (
-              <div className={styles.footer}>
+            <div className={styles.footer}>
+              {footer ? (
+                footer
+              ) : type === "info" ||
+                type === "success" ||
+                type === "error" ||
+                type === "warning" ? (
                 <Button
                   onClick={() => {
                     onOk();
@@ -97,29 +102,31 @@ const Modal = ({
                 >
                   {okButtonText}
                 </Button>
-              </div>
-            ) : (
-              <div className={styles.footer}>
-                <Button
-                  onClick={() => {
-                    onOk();
-                  }}
-                >
-                  {okButtonText}
-                </Button>
-                <Button
-                  onClick={() => {
-                    onCancel();
-                  }}
-                  type="secondary"
-                >
-                  {cancelButtonText}
-                </Button>
-              </div>
-            )}
+              ) : (
+                <>
+                  <Button
+                    onClick={() => {
+                      onOk();
+                    }}
+                  >
+                    {okButtonText}
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      onCancel();
+                    }}
+                    type="secondary"
+                  >
+                    {cancelButtonText}
+                  </Button>
+                </>
+              )}
+            </div>
           </Container>
 
-          <div className={styles.mask} onClick={onCancel}></div>
+          <div className={styles.mask} onClick={() => {
+            onCancel()
+          }}></div>
         </div>
       </CSSTransition>,
       document.body
