@@ -225,12 +225,11 @@ const HOCModal = (Component) => {
         isOpen={modalMethodIsOpen}
         onOk={onOk2}
         onCancel={onCancel2}
-        children={text}
         typed={typed}
         contentClassName={contentClassName}
         type={type}
         {...props}
-      ></Component>
+      >{text}</Component>
     );
   };
 };

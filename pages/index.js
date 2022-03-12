@@ -121,14 +121,14 @@ export default function Home() {
           }}
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M32 11H28V13H24V15H20V17H18V33H20V31H24V29H28V27H32V11Z"
             fill="#676767"
           />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M4 11H8V13H12V15H16V17H18V33H16V31H12V29H8V27H4V11Z"
             fill="#C5C5C5"
           />
@@ -136,8 +136,8 @@ export default function Home() {
           <path d="M30 17H26V21H30V17Z" fill="black" />
           <path d="M24 23H20V27H24V23Z" fill="black" />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M20 3H16V5H12V7H8V9H4V11H8V13H12V15H16V17H20V15H24V13H28V11H32V9H28V7H24V5H20V3Z"
             fill="white"
           />
@@ -145,8 +145,8 @@ export default function Home() {
           <path d="M20 9H16V11H20V9Z" fill="black" />
           <path d="M26 9H22V11H26V9Z" fill="black" />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M20 1H16V3H12V5H8V7H4V9H2V27H4V29H8V31H12V33H16V35H20V33H24V31H28V29H32V27H34V9H32V7H28V5H24V3H20V1ZM20 3V5H24V7H28V9H32V27H28V29H24V31H20V33H16V31H12V29H8V27H4V9H8V7H12V5H16V3H20Z"
             fill="black"
           />
