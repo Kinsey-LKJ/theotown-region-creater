@@ -3,7 +3,7 @@
   width: calc(100vw - 48px);
   margin: 0 auto;
   display: grid;
-  grid-gap: 32px;
+  grid-gap: 24px;
   color: white;
   padding: 24px;
 }
@@ -35,3 +35,16 @@
 .codeModal {
     word-break: break-word;
 }
+
+.container :global(h1) {
+
+}
+
+.betaSign {
+  padding: 2px 4px;
+  border-radius: 8px;
+  background-color: #d42130;
+  font-size: 14px;
+}
+
+
