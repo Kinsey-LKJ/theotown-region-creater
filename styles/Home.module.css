@@ -45,6 +45,8 @@
   border-radius: 8px;
   background-color: #d42130;
   font-size: 14px;
+  transform: translateY(-6px);
+
 }
 
 

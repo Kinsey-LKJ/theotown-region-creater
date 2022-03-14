@@ -13,6 +13,7 @@ import Button from "../button/button";
 import styles from "./modal.module.css";
 import Container from "../container/container";
 const Modal = ({
+  title,
   isOpen,
   onOk = () => {},
   onCancel = () => {},
@@ -85,7 +86,11 @@ const Modal = ({
                 overflowY: "scroll",
               }}
             >
-              <div ref={el}>{!typed?.strings ? children : ""}</div>
+              {title ? <div className={styles.title}>{title}</div> : ""}
+
+              <div>
+                <div ref={el}>{!typed?.strings ? children : ""}</div>
+              </div>
             </div>
 
             <div className={styles.footer}>
@@ -124,9 +129,12 @@ const Modal = ({
             </div>
           </Container>
 
-          <div className={styles.mask} onClick={() => {
-            onCancel()
-          }}></div>
+          <div
+            className={styles.mask}
+            onClick={() => {
+              onCancel();
+            }}
+          ></div>
         </div>
       </CSSTransition>,
       document.body
@@ -187,7 +195,7 @@ const Modal = ({
 // };
 
 const HOCModal = (Component) => {
-  return function WarpComponent ({
+  return function WarpComponent({
     onOk = () => {},
     onCancel = () => {},
     text,
@@ -197,7 +205,7 @@ const HOCModal = (Component) => {
     type,
     animationDuration = 300,
     ...props
-  })  {
+  }) {
     const [modalMethodIsOpen, setModalMethodIsOpen] = useState(false);
     useEffect(() => {
       setTimeout(() => {
@@ -229,7 +237,9 @@ const HOCModal = (Component) => {
         contentClassName={contentClassName}
         type={type}
         {...props}
-      >{text}</Component>
+      >
+        {text}
+      </Component>
     );
   };
 };
