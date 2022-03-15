@@ -1,0 +1,84 @@
+.ctn {
+  position: relative;
+  margin: 4px;
+  display: flex;
+  align-items: center;
+  --size-width: var(--size-switch-large-width);
+  --size-height: var(--size-switch-large-height);
+  --size-switch-large-width: 56px;
+  --size-switch-large-height: 32px;
+  font-size: 14px;
+}
+
+.ctn input {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+}
+
+.ctn label {
+  width: var(--size-width);
+  height: var(--size-height);
+  background-color: var(--theotown-creater-secondary-dark);
+  display: block;
+  box-shadow: 0px 4px 0 0 var(--input-border), 4px 0px 0 0 var(--input-border),
+    -4px 0px 0 0 var(--input-border), 0px -4px 0 0 var(--input-border),
+    0px -3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
+    3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
+    0px 3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
+    -3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset;
+  --input-border: var(--theotown-creater-secondary-bright);
+  cursor: pointer;
+}
+
+.ctn > div {
+  width: calc((var(--size-width) / 2) - 2px - 4px);
+  height: calc(var(--size-height) - 4px - 8px);
+  position: absolute;
+  background-color: var(--theotown-creater-blue-4);
+  box-shadow: 0px 2px 0 0 var(--theotown-creater-secondary-shadows),
+    2px 0px 0 0 var(--theotown-creater-secondary-shadows),
+    -2px 0px 0 0 var(--theotown-creater-secondary-shadows),
+    0px -2px 0 0 var(--theotown-creater-secondary-shadows);
+  left: calc(2px + 4px);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ctn > div > div {
+    width: 68%;
+    height: 68%;
+    border: 2px solid var(--theotown-creater-secondary-bright);
+}
+
+.ctn input:checked + div {
+    background-color: var(--theotown-creater-primary);
+    box-shadow: 0px 2px 0 0 var(--theotown-creater-primary-shadows),
+    2px 0px 0 0 var(--theotown-creater-primary-shadows),
+    -2px 0px 0 0 var(--theotown-creater-primary-bright),
+    0px -2px 0 0 var(--theotown-creater-primary-bright);
+  left: calc(var(--size-width) - (var(--size-width) / 2));
+}
+
+
+
+/* .ctn input:checked + div + label {
+    background-color: var(--theotown-creater-primary-dark);
+  left: calc(var(--size-width) - (var(--size-width) / 2));
+  box-shadow: 0px 4px 0 0 var(--input-border), 4px 0px 0 0 var(--input-border),
+    -4px 0px 0 0 var(--input-border), 0px -4px 0 0 var(--input-border),
+    0px -3px 0 0 var(--theotown-creater-primary-inline-shadow) inset,
+    3px 0px 0 0 var(--theotown-creater-primary-inline-shadow) inset,
+    0px 3px 0 0 var(--theotown-creater-primary-inline-shadow) inset,
+    -3px 0px 0 0 var(--theotown-creater-primary-inline-shadow) inset;
+  --input-border: var(--theotown-creater-secondary-bright);
+} */
+
+.ctn input:checked + div > div{
+    width: 2px;
+    height: 72%;
+    background-color: white;
+    border: none;
+}
