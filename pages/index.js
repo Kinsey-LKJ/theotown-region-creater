@@ -395,8 +395,8 @@ export default function Home() {
                         ...Array(
                           (regionSize / citySize) * (regionSize / citySize)
                         ).keys(),
-                      ].map(() => {
-                        return <div></div>;
+                      ].map((item) => {
+                        return <div key={item}></div>;
                       })}
 
                       <div className={styles.mapPreviewMapName}>
