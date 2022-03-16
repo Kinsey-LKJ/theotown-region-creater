@@ -152,7 +152,6 @@ const Modal = ({
   Modal[item] = ({ ...props }) => {
     let div = document.createElement("div");
     let currentConfig = Object.assign({}, props);
-    console.log(currentConfig);
     document.body.appendChild(div);
 
     const ModalMethod = HOCModal(Modal);

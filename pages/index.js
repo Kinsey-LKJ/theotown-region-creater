@@ -392,7 +392,7 @@ export default function Home() {
                     <div
                       className={styles.mapPreviewBox}
                       style={{
-                        "--no-single-city-city-width": `calc(((100vw - 64px - 24px - 24px ) / ${
+                        "--no-single-city-city-width": `calc((var(--map-preview-box-width) / ${
                           regionSize / citySize
                         }))`,
                         gridTemplateColumns: `repeat(${
