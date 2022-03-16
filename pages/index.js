@@ -450,7 +450,13 @@ export default function Home() {
           footer={
             <>
               <CopyToClipboard text={code}>
-                <Button>复制到剪贴板</Button>
+                <Button onClick={() => {
+                  Modal.info({
+                    title:'复制成功!',
+                    content:`请粘贴到西奥小镇中的控制台中，并点击运行按钮，等待提示“ Region ${name ? name : '未命名区域'} successfully created. You have to restart to see any effect. ” 后即为成功，重启游戏后即可看到您的地图。`
+                  })
+                  setModalOpen(false);
+                }}>复制到剪贴板</Button>
               </CopyToClipboard>
               <Button
                 onClick={() => {
