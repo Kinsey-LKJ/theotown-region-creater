@@ -96,9 +96,12 @@ export default function Home() {
     trees: trees,
     decoration: decoration,
     size: regionSize,
-    maps: 'STRING',
+    maps: "STRING",
   })}`;
-  code = code.replace('"maps":"STRING"',`"maps":[${getMap(regionSize,!singleCity ? citySize : regionSize)}]`)
+  code = code.replace(
+    '"maps":"STRING"',
+    `"maps":[${getMap(regionSize, !singleCity ? citySize : regionSize)}]`
+  );
   return (
     <div
       style={{
@@ -232,8 +235,8 @@ export default function Home() {
                     fill="white"
                   />
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                     d="M8 3L11.9999 3V2H7.9999V2.9998H6V3.9998H5V4.9998H4V5.9998H3V7.9998H2V11.9998H3V13.9998H4V14.9998H5V15.9998H6V16.9998H8V15.9998H6V14.9998H5V13.9998H4V11.9998H3V7.9998H4V5.9998H5V4.9998H6V3.9998H8V3ZM17 7.9998V5.9998H16V4.9998H15V3.9998H14V2.9998H12V3.9998H14V4.9998H15V5.9998H16V7.9998H17ZM17 11.9998H18V7.9998H17V11.9998ZM16 13.9998H17V11.9998H16V13.9998ZM15 14.9998V13.9998H16V14.9998H15ZM14 15.9998V14.9998H15V15.9998H14ZM14 15.9998V16.9998H12V15.9998H14ZM11.9999 18H7.9999L7.9999 17H11.9999V18Z"
                     fill="black"
                   />
@@ -287,8 +290,8 @@ export default function Home() {
                   fill="white"
                 />
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M8 3L11.9999 3V2H7.9999V2.9998H6V3.9998H5V4.9998H4V5.9998H3V7.9998H2V11.9998H3V13.9998H4V14.9998H5V15.9998H6V16.9998H8V15.9998H6V14.9998H5V13.9998H4V11.9998H3V7.9998H4V5.9998H5V4.9998H6V3.9998H8V3ZM17 7.9998V5.9998H16V4.9998H15V3.9998H14V2.9998H12V3.9998H14V4.9998H15V5.9998H16V7.9998H17ZM17 11.9998H18V7.9998H17V11.9998ZM16 13.9998H17V11.9998H16V13.9998ZM15 14.9998V13.9998H16V14.9998H15ZM14 15.9998V14.9998H15V15.9998H14ZM14 15.9998V16.9998H12V15.9998H14ZM11.9999 18H7.9999L7.9999 17H11.9999V18Z"
                   fill="black"
                 />
