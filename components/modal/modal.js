@@ -84,6 +84,7 @@ const Modal = ({
             <div
               style={{
                 overflowY: "scroll",
+                overflowX: "hidden"
               }}
             >
               {title ? <div className={styles.title}>{title}</div> : ""}
@@ -198,7 +199,7 @@ const HOCModal = (Component) => {
   return function WarpComponent({
     onOk = () => {},
     onCancel = () => {},
-    text,
+    content,
     typed,
     contentClassName,
     destroy,
@@ -238,7 +239,7 @@ const HOCModal = (Component) => {
         type={type}
         {...props}
       >
-        {text}
+        {content}
       </Component>
     );
   };
