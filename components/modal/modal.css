@@ -41,3 +41,7 @@
   transform: translate(var(--modal-content-offset-x), var(--modal-content-offset-y));
   transition: all 0.2s;
 }
+
+body.modal-open{
+  overflow: hidden;
+}

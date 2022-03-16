@@ -45,6 +45,9 @@ const Modal = ({
 
       ty.current = new Typed(el.current, options);
     }
+    if( isBrowser){
+      document.body.classList.toggle('modal-open')
+    }
     // return () => {
     //   typedRef.destroy();
     // };
