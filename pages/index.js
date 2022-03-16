@@ -215,9 +215,18 @@ export default function Home() {
               xmlns="http://www.w3.org/2000/svg"
               onClick={() => {
                 Modal.info({
-                  content:
-                    <div>当开启单一城市后，一个区域将会只包含一个城市，也就是区域大小等于城市大小，通过此项设置，你可以获得一个非常大的城市，甚至可以超过最大单个城市为 512 * 512 的限制，但游戏会有 bug 产生，目前已知的 bug 有:<br />1、小地图定位不准确。</div>,
+                  content: (
+                    <div>
+                      当开启单一城市后，一个区域将会只包含一个城市，也就是区域大小等于城市大小，通过此项设置，你可以获得一个非常大的城市，甚至可以超过最大单个城市为
+                      512 * 512 的限制，但游戏会有 bug 产生，目前已知的 bug 有:
+                      <br />
+                      1、小地图定位不准确。
+                      <br />
+                      目前能够成功创建的最大单个城市大小为 1536格 * 1536格，测试机型为 iPhone 13 Pro，如果你成功生成了更大的单个城市，请联系我，我会将最高记录更新成你的。 
+                    </div>
+                  ),
                   title: "单一城市",
+                  okButtonText: "我知道了",
                 });
               }}
               style={{
@@ -263,8 +272,9 @@ export default function Home() {
                   onClick={() => {
                     Modal.info({
                       content:
-                        "表示组成一个区域中城市的大小，1个单位代表游戏中 64格*64格。",
+                        "表示组成一个区域中城市的大小，1个单位代表游戏中 64格*64格，建议不要设置的太小。",
                       title: "最小城市单元",
+                      okButtonText: "我知道了",
                     });
                   }}
                   style={{
@@ -324,6 +334,7 @@ export default function Home() {
                     content:
                       "表示一个区域的总大小，1个单位代表游戏中 64格*64格，此项会极大影响游戏的性能，建议不要设置的太高（建议手机用户不要超过32）。",
                     title: "区域大小",
+                    okButtonText: "我知道了",
                   });
                 }}
               >
@@ -345,12 +356,13 @@ export default function Home() {
           value={regionSize}
           onChange={changeRegionSizeState}
           min={8}
-          max={32}
+          max={48}
           markes={{
             8: 8,
             16: 16,
             24: 24,
             32: 32,
+            48: 48,
           }}
         ></Slider>
         <Button
@@ -361,7 +373,7 @@ export default function Home() {
                 Modal.confirm({
                   title: "注意事项",
                   content:
-                    "在生成代码之前，请确保已打开西奥小镇中的实验室功能，以把代码粘贴到控制台中。最终能否成功生成地图与区域大小、城市大小以及设备的性能有关，如果区域、城市过大可能会导致在生成时游戏闪退、卡死，由此导致的所有问题与本站无关，请自行承担后果，如果您同意自行承担所有后果，请点击“确认生成”，若您不同意，请点击“取消”。",
+                    "在生成代码之前，请确保已打开西奥小镇中的实验室功能，以把代码粘贴到控制台中。最终能否成功生成地图与区域大小、城市大小以及设备的性能有关，如果区域、城市过大可能会导致在生成时游戏闪退、卡死，由此导致的所有问题与本站无关，请自行承担后果，如果你同意自行承担所有后果，请点击“确认生成”，若你不同意，请点击“取消”。",
                   okButtonText: "确认生成",
                   onOk: () => {
                     setModalOpen(true);
@@ -414,7 +426,7 @@ export default function Home() {
                     >
                       <div></div>
                       <div className={styles.mapPreviewMapName}>
-                        地图名称:{name ? name : "未命名区域"}
+                        {name ? name : "未命名区域"}
                       </div>
                     </div>
                   )}
@@ -450,13 +462,19 @@ export default function Home() {
           footer={
             <>
               <CopyToClipboard text={code}>
-                <Button onClick={() => {
-                  Modal.info({
-                    title:'复制成功!',
-                    content:`请粘贴到西奥小镇中的控制台中，并点击运行按钮，等待提示“ Region ${name ? name : '未命名区域'} successfully created. You have to restart to see any effect. ” 后即为成功，重启游戏后即可看到您的地图。`
-                  })
-                  setModalOpen(false);
-                }}>复制到剪贴板</Button>
+                <Button
+                  onClick={() => {
+                    Modal.info({
+                      title: "复制成功!",
+                      content: `请粘贴到西奥小镇中的控制台中，并点击运行按钮，等待提示“ Region ${
+                        name ? name : "未命名区域"
+                      } successfully created. You have to restart to see any effect. ” 后即为成功，重启游戏后即可看到你的地图。如果在执行代码时出现闪退，有极大概率创建地图出错了，请将区域大小调笑或将城市大小调大，然后重新尝试一下。`,
+                    });
+                    setModalOpen(false);
+                  }}
+                >
+                  复制到剪贴板
+                </Button>
               </CopyToClipboard>
               <Button
                 onClick={() => {
