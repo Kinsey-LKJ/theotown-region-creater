@@ -500,7 +500,7 @@ export default function Home() {
           Hello
         </Modal>
       </Container>
-      <div>问题反馈: kinsey@lkj.deisgn</div>
+      <div>问题反馈: kinsey@lkj.design</div>
     </div>
   );
 }
