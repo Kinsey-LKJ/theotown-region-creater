@@ -356,13 +356,12 @@ export default function Home() {
           value={regionSize}
           onChange={changeRegionSizeState}
           min={8}
-          max={48}
+          max={32}
           markes={{
             8: 8,
             16: 16,
             24: 24,
             32: 32,
-            48: 48,
           }}
         ></Slider>
         <Button
