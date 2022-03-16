@@ -45,8 +45,8 @@ const Modal = ({
 
       ty.current = new Typed(el.current, options);
     }
-    if( isBrowser){
-      document.body.classList.toggle('modal-open')
+    if (isBrowser) {
+      document.body.classList.toggle("modal-open");
     }
     // return () => {
     //   typedRef.destroy();
@@ -84,14 +84,14 @@ const Modal = ({
           <Container
             className={`${styles.content} modal-content ${contentClassName}`}
           >
+            {title ? <div className={styles.title}>{title}</div> : ""}
             <div
               style={{
                 overflowY: "scroll",
-                overflowX: "hidden"
+                overflowX: "hidden",
+                height:'100%'
               }}
             >
-              {title ? <div className={styles.title}>{title}</div> : ""}
-
               <div>
                 <div ref={el}>{!typed?.strings ? children : ""}</div>
               </div>
