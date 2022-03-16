@@ -253,7 +253,7 @@ export default function Home() {
                   gridGap: "4px",
                 }}
               >
-                最小城市单元
+                单个城市大小
                 <svg
                   width="20"
                   height="20"
