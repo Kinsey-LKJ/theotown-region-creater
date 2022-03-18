@@ -48,28 +48,34 @@ export default function Home() {
   const [terrain, setTerrain] = useState(false);
   const [trees, setTrees] = useState(false);
   const [decoration, setDecoration] = useState(false);
-  const [citySize, setCitySize] = useState(1);
-  const [regionSize, setRegionSize] = useState(8);
+  const [citySize, setCitySize] = useState(4);
+  const [regionSize, setRegionSize] = useState(16);
   const [singleCity, setSingleCity] = useState(false);
 
   const changeCitySizeState = (value) => {
     if (value === 1 || value === 2 || value === 4 || value === 8) {
+      if (value === 1) {
+        Modal.info({
+          title: "温馨提示",
+          content:
+            "你正在将单个城市大小调整为最小值，最终的地图可能会生成非常非常多的小城市，你可以点击“立即生成“来进行预览，这会极大的增加性能的消耗，并且创建失败的概率非常大，请知悉。",
+        });
+      }
       setCitySize(value);
     }
   };
   const [modalOpen, setModalOpen] = useState(false);
 
   const changeRegionSizeState = (value) => {
-    if(!singleCity) {
+    if (!singleCity) {
       if (value % 8 === 0) {
         setRegionSize(value);
       }
-    }else {
+    } else {
       if (value % 2 === 0) {
         setRegionSize(value);
       }
     }
-
   };
 
   const rondomSeed = (number) => {
@@ -308,7 +314,6 @@ export default function Home() {
               value={citySize}
               onChange={changeCitySizeState}
               markes={{
-                1: 1,
                 2: 2,
                 4: 4,
                 8: 8,
@@ -429,7 +434,7 @@ export default function Home() {
               20: 20,
               22: 22,
               24: 24,
-              26:26,
+              26: 26,
               28: 28,
               30: 30,
               32: 32,
