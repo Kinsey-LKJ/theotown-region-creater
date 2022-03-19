@@ -531,7 +531,9 @@ export default function Home() {
 
                   <div>
                     单个城市大小:
-                    {`${(citySize / 8) * 512}格 * ${(citySize / 8) * 512}格`}
+                    {!singleCity ? `${(citySize / 8) * 512}格 * ${(citySize / 8) * 512}格` : `${(regionSize / 8) * 512}格 * ${
+                      (regionSize / 8) * 512
+                    }格`}
                   </div>
 
                   <div>
