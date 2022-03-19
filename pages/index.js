@@ -61,37 +61,40 @@ export default function Home() {
       });
     }
 
-    setRegionSize(parseInt(regionSize / value) * value);
+    if (regionSize <= 8) {
+      setRegionSize(value);
+    } else {
+      setRegionSize(parseInt(regionSize / value) * value);
+    }
+
     setCitySize(value);
   };
   const [modalOpen, setModalOpen] = useState(false);
 
   const changeRegionSizeState = (value) => {
-    if(!singleCity){
+    if (!singleCity) {
       if (value % citySize === 0) {
         setRegionSize(value);
       }
-    }else{
+    } else {
       if (value % 2 === 0) {
         setRegionSize(value);
       }
     }
-
   };
 
   const changeSingleCity = (value) => {
-    if(value){
-      if(regionSize < 8){
-        setRegionSize(8)
-      }else{
-        setRegionSize(Math.ceil(regionSize / 2) * 2)
+    if (value) {
+      if (regionSize < 8) {
+        setRegionSize(8);
+      } else {
+        setRegionSize(Math.ceil(regionSize / 2) * 2);
       }
-
-    }else{
-      setRegionSize(Math.ceil(regionSize / citySize) * citySize)
+    } else {
+      setRegionSize(Math.ceil(regionSize / citySize) * citySize);
     }
-    setSingleCity(value)
-  }
+    setSingleCity(value);
+  };
 
   const rondomSeed = (number) => {
     let arr = new Array();
@@ -486,6 +489,7 @@ export default function Home() {
                   },
                 });
               },
+              contentClassName: styles.previewModal,
               okButtonText: "下一步",
               content: (
                 <div
@@ -525,11 +529,9 @@ export default function Home() {
                     </div>
                   )}
 
-<div>
+                  <div>
                     单个城市大小:
-                    {`${(citySize / 8) * 512}格 * ${
-                      (citySize / 8) * 512
-                    }格`}
+                    {`${(citySize / 8) * 512}格 * ${(citySize / 8) * 512}格`}
                   </div>
 
                   <div>

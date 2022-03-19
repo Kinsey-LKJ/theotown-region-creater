@@ -37,6 +37,10 @@
     word-break: break-word;
 }
 
+.previewModal {
+  height: 800px;
+}
+
 .container :global(h1) {
 
 }
@@ -74,6 +78,12 @@
     position: absolute;
     font-size: 24px;
     opacity: 0.5;
+}
+
+@media only screen and (max-width: 768px) {
+  .previewModal{
+      height: calc(100vh - 64px);
+  }
 }
 
 
