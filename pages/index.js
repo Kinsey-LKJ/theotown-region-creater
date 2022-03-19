@@ -53,30 +53,45 @@ export default function Home() {
   const [singleCity, setSingleCity] = useState(false);
 
   const changeCitySizeState = (value) => {
-    if (value === 1 || value === 2 || value === 4 || value === 8) {
-      if (value === 1) {
-        Modal.info({
-          title: "温馨提示",
-          content:
-            "你正在将单个城市大小调整为最小值，最终的地图可能会生成非常非常多的小城市，你可以点击“立即生成“来进行预览，这会极大的增加性能的消耗，并且创建失败的概率非常大，请知悉。",
-        });
-      }
-      setCitySize(value);
+    if (value === 1) {
+      Modal.info({
+        title: "温馨提示",
+        content:
+          "你正在将单个城市大小调整为最小值，最终的地图可能会生成非常非常多的小城市，你可以点击“立即生成“来进行预览，这会极大的增加性能的消耗，并且创建失败的概率非常大，请知悉。",
+      });
     }
+
+    setRegionSize(parseInt(regionSize / value) * value);
+    setCitySize(value);
   };
   const [modalOpen, setModalOpen] = useState(false);
 
   const changeRegionSizeState = (value) => {
-    if (!singleCity) {
-      if (value % 8 === 0) {
+    if(!singleCity){
+      if (value % citySize === 0) {
         setRegionSize(value);
       }
-    } else {
+    }else{
       if (value % 2 === 0) {
         setRegionSize(value);
       }
     }
+
   };
+
+  const changeSingleCity = (value) => {
+    if(value){
+      if(regionSize < 8){
+        setRegionSize(8)
+      }else{
+        setRegionSize(Math.ceil(regionSize / 2) * 2)
+      }
+
+    }else{
+      setRegionSize(Math.ceil(regionSize / citySize) * citySize)
+    }
+    setSingleCity(value)
+  }
 
   const rondomSeed = (number) => {
     let arr = new Array();
@@ -100,6 +115,16 @@ export default function Home() {
     return array.join(", ");
   };
 
+  const getRegionMarkes = (citySize) => {
+    let obj = {};
+
+    for (let i = 1; i <= parseInt(32 / citySize); i++) {
+      obj[i * citySize] = i * citySize;
+    }
+
+    return obj;
+  };
+
   let code = `cr:${JSON.stringify({
     name: name === "" ? "未命名区域" : name,
     seed: seedValue,
@@ -114,6 +139,10 @@ export default function Home() {
     '"maps":"STRING"',
     `"maps":[${getMap(regionSize, !singleCity ? citySize : regionSize)}]`
   );
+
+  let citys = regionSize / citySize;
+
+  let regionMarkes = getRegionMarkes(citySize);
   return (
     <div
       style={{
@@ -262,7 +291,7 @@ export default function Home() {
             </svg>
           </div>
 
-          <Switch checked={singleCity} onChange={setSingleCity}></Switch>
+          <Switch checked={singleCity} onChange={changeSingleCity}></Switch>
         </div>
 
         {!singleCity ? (
@@ -313,12 +342,17 @@ export default function Home() {
               }
               value={citySize}
               onChange={changeCitySizeState}
+              min={4}
+              max={8}
               markes={{
-                2: 2,
                 4: 4,
+                5: 5,
+                6: 6,
+                7: 7,
                 8: 8,
               }}
             ></Slider>
+
             <Slider
               label={
                 <div
@@ -365,14 +399,9 @@ export default function Home() {
               }
               value={regionSize}
               onChange={changeRegionSizeState}
-              min={8}
-              max={32}
-              markes={{
-                8: 8,
-                16: 16,
-                24: 24,
-                32: 32,
-              }}
+              min={citySize}
+              max={regionMarkes[parseInt(32 / citySize) * citySize]}
+              markes={regionMarkes}
             ></Slider>
           </>
         ) : (
@@ -469,22 +498,11 @@ export default function Home() {
                     <div
                       className={styles.mapPreviewBox}
                       style={{
-                        "--no-single-city-city-width": `calc((var(--map-preview-box-width) / ${
-                          regionSize / citySize
-                        }))`,
-                        gridTemplateColumns: `repeat(${
-                          regionSize / citySize
-                        },var(--no-single-city-city-width)`,
-                        gridTemplateRows: `repeat(${
-                          regionSize / citySize
-                        },var(--no-single-city-city-width)`,
+                        gridTemplateColumns: `repeat(${citys}, 1fr)`,
+                        gridTemplateRows: `repeat(${citys}, 1fr)`,
                       }}
                     >
-                      {[
-                        ...Array(
-                          (regionSize / citySize) * (regionSize / citySize)
-                        ).keys(),
-                      ].map((item) => {
+                      {[...Array(citys * citys).keys()].map((item) => {
                         return <div key={item}></div>;
                       })}
 
@@ -496,9 +514,8 @@ export default function Home() {
                     <div
                       className={styles.mapPreviewBox}
                       style={{
-                        "--no-single-city-city-width": `var(--map-preview-box-width)`,
-                        gridTemplateColumns: `repeat(${1},var(--no-single-city-city-width)`,
-                        gridTemplateRows: `repeat(${1},var(--no-single-city-city-width)`,
+                        gridTemplateColumns: "1fr",
+                        gridTemplateRows: "1fr",
                       }}
                     >
                       <div></div>
@@ -507,6 +524,20 @@ export default function Home() {
                       </div>
                     </div>
                   )}
+
+<div>
+                    单个城市大小:
+                    {`${(citySize / 8) * 512}格 * ${
+                      (citySize / 8) * 512
+                    }格`}
+                  </div>
+
+                  <div>
+                    区域总大小:
+                    {`${(regionSize / 8) * 512}格 * ${
+                      (regionSize / 8) * 512
+                    }格`}
+                  </div>
 
                   <div>种子:{seedValue}</div>
 
@@ -517,13 +548,6 @@ export default function Home() {
                   <div>树木:{trees ? "开启" : "关闭"}</div>
 
                   <div>装饰:{decoration ? "开启" : "关闭"}</div>
-
-                  <div>
-                    区域总大小:
-                    {`${(regionSize / 8) * 512}格 * ${
-                      (regionSize / 8) * 512
-                    }格`}
-                  </div>
                 </div>
               ),
             });

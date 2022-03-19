@@ -53,6 +53,8 @@
 .mapPreviewBox {
   display: grid;
   position: relative;
+  width: var(--map-preview-box-width);
+  height: var(--map-preview-box-width);
 }
 
 .mapPreviewBox > *{
