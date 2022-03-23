@@ -9,10 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "filepond": "^4.30.3",
+    "filepond-plugin-image-exif-orientation": "^1.0.11",
+    "filepond-plugin-image-preview": "^4.6.10",
+    "formidable": "^2.0.1",
     "next": "12.1.0",
+    "pixelate": "^0.0.5",
     "react": "17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "17.0.2",
+    "react-filepond": "^7.1.1",
     "react-load-script": "^0.0.6",
     "react-transition-group": "^4.4.2",
     "typed.js": "^2.0.12",

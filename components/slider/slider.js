@@ -1,6 +1,6 @@
 import styles from "./slider.module.css";
 
-const Slider = ({ value, max = 8, min = 1, label, onChange, markes }) => {
+const Slider = ({ value, max = 8, min = 1, step,label, onChange, markes }) => {
   const createArray = (start, end) => {
     let array = [];
     if (markes) {
@@ -35,6 +35,7 @@ const Slider = ({ value, max = 8, min = 1, label, onChange, markes }) => {
           max={max}
           min={min}
           value={value}
+          step={step}
           onChange={(e) => {
             handleValueChange(e.target.value);
           }}
