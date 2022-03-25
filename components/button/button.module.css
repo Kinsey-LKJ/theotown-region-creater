@@ -62,7 +62,7 @@
 }
 
 .newStyle {
-  background-color: #213395;
+  background-color: var(--name-private-background-color);
   box-shadow: var(--name-private-border-bottom), var(--name-private-shadow-2),
     var(--name-private-shadow-1), var(--name-private-border-left),
     var(--name-private-border-top), var(--name-private-border-right),
@@ -70,7 +70,9 @@
     inset 0px -1px 0px var(--name-private-border-color),
     inset 1px 0px 0px var(--name-private-border-color),
     inset 0px 1px 0px var(--name-private-border-color);
-  margin: var(--name-border-width);
+  margin: var(--name-private-border-width) var(--name-private-border-width)
+    calc(-3 * var(--name-private-shadow-spread))
+    var(--name-private-border-width);
 }
 
 .newStyle:active {

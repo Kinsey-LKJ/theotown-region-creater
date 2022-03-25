@@ -1,12 +1,27 @@
-import Button from "../components/button/button"
+import Button from "../components/button/button";
+import Select from "../components/select/select";
 
 const Test = () => {
-    return (
-        <Button type="newStyle" style={{
-            '--name-border-shadow-color':'--theotown-creater-primary-shadow',
-            '--name-border-color':'--theotown-creater-primary-bright'
-        }}>测试测试测试测试测试</Button>
-    )
-}
+  return (
+    <div
+      style={{
+        "--name-shadow-color": "var(--theotown-creater-primary-shadows)",
+        "--name-border-color": "var(--theotown-creater-primary-bright)",
+        "--name-background-color": "var(--theotown-creater-primary)",
+        //   color:"black"
+      }}
+    >
+      <Button type="newStyle">我是一个按钮</Button>
+      <div
+        style={{
+          marginTop: "24px",
+          width: "200px",
+        }}
+      >
+        <Select defaultValue={"luobo"}></Select>
+      </div>
+    </div>
+  );
+};
 
-export default Test
+export default Test;

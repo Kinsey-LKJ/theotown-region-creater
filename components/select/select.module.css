@@ -1,0 +1,130 @@
+.ctn {
+  position: relative;
+
+  --name-private-background-color: var(--name-background-color);
+  --name-private-border-width: var(--name-border-width, 3px);
+  --name-private-border-color: var(--name-border-color, white);
+  --name-private-shadow-color: var(--name-shadow-color, black);
+  --name-private-shadow-spread: calc(-1 * var(--name-private-border-width));
+  --name-private-border-top: 0px calc(2 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-bottom: 0px calc(-2 * var(--name-private-shadow-spread))
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-right: calc(-2 * var(--name-private-shadow-spread)) 0px
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-left: calc(2 * var(--name-private-shadow-spread)) 0px
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-shadow-1: 0px calc(-2 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-color);
+  --name-private-shadow-2: 0px calc(-4 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-spread) var(--name-private-shadow-color);
+
+  background-color: var(--name-private-background-color);
+  box-shadow: var(--name-private-border-bottom), var(--name-private-shadow-2),
+    var(--name-private-shadow-1), var(--name-private-border-left),
+    var(--name-private-border-top), var(--name-private-border-right),
+    inset -1px 0px 0px var(--name-private-border-color),
+    inset 0px -1px 0px var(--name-private-border-color),
+    inset 1px 0px 0px var(--name-private-border-color),
+    inset 0px 1px 0px var(--name-private-border-color);
+  margin: var(--name-private-border-width) var(--name-private-border-width)
+    calc(-3 * var(--name-private-shadow-spread))
+    var(--name-private-border-width);
+}
+.ctn i {
+  position: absolute;
+  width: var(--name-private-border-width);
+  height: var(--name-private-border-width);
+  background-color: var(--name-private-border-color);
+}
+
+.ctn i:nth-child(1) {
+  left: 1px;
+  top: 1px;
+}
+
+.ctn i:nth-child(2) {
+  right: 1px;
+  top: 1px;
+}
+
+.ctn i:nth-child(3) {
+  right: 1px;
+  bottom: 1px;
+}
+
+.ctn i:nth-child(4) {
+  left: 1px;
+  bottom: 1px;
+}
+
+.checked > img{
+  opacity: 1 !important;
+}
+
+.dropDown {
+  width: 100%;
+  position: absolute;
+  margin-top: calc(-4 * var(--name-private-shadow-spread));
+  padding: 5px 18px;
+  --name-private-background-color: var(--name-background-color);
+  --name-private-border-width: var(--name-border-width, 3px);
+  --name-private-border-color: var(--name-border-color, white);
+  --name-private-shadow-color: var(--name-shadow-color, black);
+  --name-private-shadow-spread: calc(-1 * var(--name-private-border-width));
+  --name-private-border-top: 0px calc(2 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-bottom: 0px calc(-2 * var(--name-private-shadow-spread))
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-right: calc(-2 * var(--name-private-shadow-spread)) 0px
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-left: calc(2 * var(--name-private-shadow-spread)) 0px
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-shadow-1: 0px calc(-2 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-color);
+  --name-private-shadow-2: 0px calc(-4 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-spread) var(--name-private-shadow-color);
+
+  background-color: var(--name-private-background-color);
+  box-shadow: var(--name-private-border-bottom), var(--name-private-shadow-2),
+    var(--name-private-shadow-1), var(--name-private-border-left),
+    var(--name-private-border-top), var(--name-private-border-right),
+    inset -1px 0px 0px var(--name-private-border-color),
+    inset 0px -1px 0px var(--name-private-border-color),
+    inset 1px 0px 0px var(--name-private-border-color),
+    inset 0px 1px 0px var(--name-private-border-color);
+}
+
+.body {
+  padding: 5px 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.body > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+
+.dropDownItems {
+  width: 100%;
+  cursor: pointer;
+}
+
+.dropDownItems > * > img {
+  opacity: 0;
+}
+
+.dropDownItems > *:hover > img{
+  opacity: 1;
+}
+
+.dropDownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
