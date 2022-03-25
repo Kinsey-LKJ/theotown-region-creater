@@ -68,7 +68,7 @@ const Select = ({ defaultValue = null }) => {
           width="16"
           height="16"
           xmlns="http://www.w3.org/2000/svg"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
           fill="currentColor"
         >
           <rect x="3" y="5" width="1" height="1" />
@@ -114,6 +114,7 @@ const Select = ({ defaultValue = null }) => {
             {data.map((item) => {
               return (
                 <div
+                  key={item.value}
                   onClick={() => {
                     setValue(item.value);
                     setIsOpen(false);
