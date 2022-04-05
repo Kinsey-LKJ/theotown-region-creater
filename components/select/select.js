@@ -1,26 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "./select.module.css";
-let data = [
-  {
-    value: "qingcai",
-    label: "青菜",
-  },
-  {
-    value: "luobo",
-    label: "萝卜",
-  },
-  {
-    value: "tudou",
-    label: "土豆",
-  },
-  {
-    value: "xiangjaio",
-    label: "香蕉",
-  },
-];
-const Select = ({ defaultValue = null }) => {
+
+const Select = ({data, defaultValue = null ,placeholder="请选择",onChange=() => {}}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState(defaultValue);
+  const [_value, set_Value] = useState(defaultValue);
   const selectRef = useRef(null);
   useEffect(() => {
     if (isOpen) {
@@ -30,6 +13,11 @@ const Select = ({ defaultValue = null }) => {
       };
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    onChange(_value)
+    console.log(1)
+  },[_value])
 
   const toggleOpen = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
@@ -43,16 +31,16 @@ const Select = ({ defaultValue = null }) => {
     setIsOpen(false);
   };
 
-  const getLabel = (value) => {
+  const getLabel = (_value) => {
     for (let i = 0; i < data.length; i++) {
-      if (data[i].value === value) {
+      if (data[i].value === _value) {
         return data[i].label;
       }
     }
   };
 
   return (
-    <div className={styles.ctn} ref={selectRef}>
+    <div className={`${styles.ctn} box`} ref={selectRef}>
       <div className={styles.body} onClick={toggleOpen}>
         <div>
           <i></i>
@@ -61,7 +49,7 @@ const Select = ({ defaultValue = null }) => {
           <i></i>
         </div>
 
-        {value ? getLabel(value) : "请选择XXX"}
+        {_value ? getLabel(_value) : placeholder}
 
         <svg
           version="1.1"
@@ -103,7 +91,7 @@ const Select = ({ defaultValue = null }) => {
       </div>
 
       {isOpen ? (
-        <div className={styles.dropDown}>
+        <div className={`${styles.dropDown} box`}>
           <div>
             <i></i>
             <i></i>
@@ -111,16 +99,16 @@ const Select = ({ defaultValue = null }) => {
             <i></i>
           </div>
           <div className={styles.dropDownItems}>
-            {data.map((item) => {
+            {data?.map((item) => {
               return (
                 <div
                   key={item.value}
                   onClick={() => {
-                    setValue(item.value);
+                    set_Value(item.value);
                     setIsOpen(false);
                   }}
                   className={`${styles.dropDownItem} ${
-                    item.value === value ? styles.checked : ""
+                    item.value === _value ? styles.checked : ""
                   }`}
                 >
                   {item.label}

@@ -1,0 +1,112 @@
+.box {
+  --name-private-background-color: var(
+    --name-background-color,
+    var(--theotown-creater-primary)
+  );
+  --name-private-border-width: var(--name-border-width, 3px);
+  --name-private-border-color: var(
+    --name-border-color,
+    var(--theotown-creater-primary-bright)
+  );
+  --name-private-shadow-color: var(
+    --name-shadow-color,
+    var(--theotown-creater-primary-shadows)
+  );
+  --name-private-shadow-spread: calc(-1 * var(--name-private-border-width));
+  --name-private-border-top: 0px calc(2 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-bottom: 0px calc(-2 * var(--name-private-shadow-spread))
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-right: calc(-2 * var(--name-private-shadow-spread)) 0px
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-left: calc(2 * var(--name-private-shadow-spread)) 0px
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-shadow-1: 0px calc(-2 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-color);
+  --name-private-shadow-2: 0px calc(-4 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-spread) var(--name-private-shadow-color);
+
+  background-color: var(--name-private-background-color);
+  box-shadow: var(--name-private-border-bottom), var(--name-private-shadow-2),
+    var(--name-private-shadow-1), var(--name-private-border-left),
+    var(--name-private-border-top), var(--name-private-border-right),
+    inset -1px 0px 0px var(--name-private-border-color),
+    inset 0px -1px 0px var(--name-private-border-color),
+    inset 1px 0px 0px var(--name-private-border-color),
+    inset 0px 1px 0px var(--name-private-border-color);
+  margin: var(--name-private-border-width) var(--name-private-border-width)
+    calc(-3 * var(--name-private-shadow-spread))
+    var(--name-private-border-width);
+}
+
+.inline-box {
+  --name-private-background-color: var(
+    --name-background-color,
+    var(--theotown-creater-primary)
+  );
+  --name-private-border-width: var(--name-border-width, 3px);
+  --name-private-border-color: var(
+    --name-border-color,
+    var(--theotown-creater-primary-bright)
+  );
+  --name-private-shadow-color: var(
+    --name-shadow-color,
+    var(--theotown-creater-primary-shadows)
+  );
+  --name-private-shadow-spread: calc(-1 * var(--name-private-border-width));
+  --name-private-border-top: 0px calc(2 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-bottom: 0px calc(-2 * var(--name-private-shadow-spread))
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-right: calc(-2 * var(--name-private-shadow-spread)) 0px
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-border-left: calc(2 * var(--name-private-shadow-spread)) 0px
+    0px var(--name-private-shadow-spread) var(--name-private-border-color);
+  --name-private-shadow-1: inset 0px calc(0 * var(--name-private-shadow-spread))
+    0px 6px var(--name-private-shadow-color);
+  background-color: var(--name-private-background-color);
+  box-shadow: var(--name-private-border-bottom), var(--name-private-border-left),
+    var(--name-private-border-top), var(--name-private-border-right),
+    inset -1px 0px 0px var(--name-private-border-color),
+    inset 0px -1px 0px var(--name-private-border-color),
+    inset 1px 0px 0px var(--name-private-border-color),
+    inset 0px 1px 0px var(--name-private-border-color),
+    var(--name-private-shadow-1);
+  margin: var(--name-private-border-width) var(--name-private-border-width)
+    var(--name-private-border-width) var(--name-private-border-width);
+}
+
+.box:active {
+  transform: translateY(4px);
+  --name-private-shadow-1: 0px calc(0 * var(--name-private-shadow-spread)) 0px
+    var(--theotown-creater-secondary-shadows);
+  --name-private-shadow-2: 0px calc(0 * var(--name-private-shadow-spread)) 0px
+    var(--name-private-shadow-spread) var(--theotown-creater-secondary-shadows);
+}
+
+.box i {
+  position: absolute;
+  width: var(--name-private-border-width);
+  height: var(--name-private-border-width);
+  background-color: var(--name-private-border-color);
+}
+
+.box i:nth-child(1) {
+  left: 1px;
+  top: 1px;
+}
+
+.box i:nth-child(2) {
+  right: 1px;
+  top: 1px;
+}
+
+.box i:nth-child(3) {
+  right: 1px;
+  bottom: 1px;
+}
+
+.box i:nth-child(4) {
+  left: 1px;
+  bottom: 1px;
+}

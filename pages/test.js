@@ -18,7 +18,7 @@ const Test = () => {
           width: "200px",
         }}
       >
-        <Select defaultValue={"luobo"}></Select>
+        <Select ></Select>
       </div>
     </div>
   );

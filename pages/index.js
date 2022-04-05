@@ -11,6 +11,9 @@ import Slider from "../components/slider/slider";
 import CopyToClipboard from "react-copy-to-clipboard";
 import styles from "../styles/Home.module.css";
 import Switch from "../components/switch/switch";
+import dynamic from "next/dynamic";
+
+const Amap = dynamic(() => import("../components/amap/amap"), { ssr: false });
 
 export default function Home() {
   // useEffect(() => {
@@ -51,6 +54,7 @@ export default function Home() {
   const [citySize, setCitySize] = useState(4);
   const [regionSize, setRegionSize] = useState(16);
   const [singleCity, setSingleCity] = useState(false);
+  const [previewCanvas, setPreviewCanvas] = useState(null);
 
   const changeCitySizeState = (value) => {
     if (value === 1) {
@@ -216,6 +220,11 @@ export default function Home() {
             />
           </svg>
         </div>
+
+        <Amap
+          previewCanvas={previewCanvas}
+          setPreviewCanvas={setPreviewCanvas}
+        ></Amap>
 
         <div className={styles.checkBoxs}>
           <CheckBox checked={trees} onChange={setTrees}>
@@ -491,7 +500,9 @@ export default function Home() {
               },
               contentClassName: styles.previewModal,
               okButtonText: "下一步",
-              content: (
+              content: previewCanvas ? (
+                <img src={previewCanvas.toDataURL()} />
+              ) : (
                 <div
                   style={{
                     display: "grid",
@@ -531,9 +542,11 @@ export default function Home() {
 
                   <div>
                     单个城市大小:
-                    {!singleCity ? `${(citySize / 8) * 512}格 * ${(citySize / 8) * 512}格` : `${(regionSize / 8) * 512}格 * ${
-                      (regionSize / 8) * 512
-                    }格`}
+                    {!singleCity
+                      ? `${(citySize / 8) * 512}格 * ${(citySize / 8) * 512}格`
+                      : `${(regionSize / 8) * 512}格 * ${
+                          (regionSize / 8) * 512
+                        }格`}
                   </div>
 
                   <div>
@@ -577,6 +590,7 @@ export default function Home() {
                     });
                     setModalOpen(false);
                   }}
+
                 >
                   复制到剪贴板
                 </Button>

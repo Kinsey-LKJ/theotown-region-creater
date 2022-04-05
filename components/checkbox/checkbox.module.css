@@ -1,7 +1,17 @@
 .ctn {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
+  width: fit-content;
+  grid-gap: 8px;
   align-items: center;
+  --name-private-width: var(--name-width, 24px);
+  --name-private-height: var(--name-height, 24px);
+  --name-private-border-width: var(--name-border-width, 3px);
+  --name-private-border-color: var(
+    --name-border-color,
+    var(--theotown-creater-primary-bright)
+  );
 }
 
 .ctn input {
@@ -16,34 +26,71 @@
 }
 
 .ctn .checkBoxIcon {
-  width: 24px;
-  height: 24px;
-  margin: 4px 12px 4px 4px;
-  background-color: var(--theotown-creater-secondary-dark);
+  width: var(--name-private-width);
+  height: var(--name-private-width);
   left: 0;
-  box-shadow: 0px 4px 0 0 var(--input-border), 4px 0px 0 0 var(--input-border),
-    -4px 0px 0 0 var(--input-border), 0px -4px 0 0 var(--input-border),
-    0px -3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
-    3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
-    0px 3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
-    -3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset;
-  --input-border: var(--theotown-creater-secondary-bright);
 }
 
 .checkedElement {
-  width: 12px;
-  height: 12px;
+  width: calc(var(--name-private-width) / 2);
+  height: calc(var(--name-private-height) / 2);
   position: absolute;
-  left: 10px;
-  background-color: var(--theotown-creater-primary);
-  box-shadow: 0px 2px 0 0 var(--theotown-creater-primary-shadows),
-    2px 0px 0 0 var(--theotown-creater-primary-shadows),
-    -2px 0px 0 0 var(--theotown-creater-primary-bright),
-    0px -2px 0 0 var(--theotown-creater-primary-bright);
+  left: calc(var(--name-private-width) / 4);
+  top: calc(var(--name-private-width) / 4);
   pointer-events: none;
   visibility: hidden;
+  box-shadow: var(--name-private-border-bottom), var(--name-private-border-left),
+    var(--name-private-border-top), var(--name-private-border-right),
+    inset -1px 0px 0px var(--name-private-border-color),
+    inset 0px -1px 0px var(--name-private-border-color),
+    inset 1px 0px 0px var(--name-private-border-color),
+    inset 0px 1px 0px var(--name-private-border-color);
 }
 
 .ctn input:checked + .checkedElement {
   visibility: visible !important;
+}
+
+.ctn i {
+  position: absolute;
+  width: var(--name-private-border-width);
+  height: var(--name-private-border-width);
+  background-color: var(--name-private-border-color);
+}
+
+.inlineBoxDecorate {
+  position: absolute;
+  width: var(--name-private-width);
+  height: var(--name-private-height);
+  top: var(--name-private-border-width);
+  left: var(--name-private-border-width);
+  pointer-events: none;
+}
+
+
+.ctn i {
+  position: absolute;
+  width: var(--name-private-border-width);
+  height: var(--name-private-border-width);
+  background-color: var(--name-private-border-color);
+}
+
+.ctn i:nth-child(1) {
+  left: 1px;
+  top: 1px;
+}
+
+.ctn i:nth-child(2) {
+  right: 1px;
+  top: 1px;
+}
+
+.ctn i:nth-child(3) {
+  right: 1px;
+  bottom: 1px;
+}
+
+.ctn i:nth-child(4) {
+  left: 1px;
+  bottom: 1px;
 }
