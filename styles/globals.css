@@ -15,6 +15,9 @@ body {
   line-height: 170%;
   color: white;
   --map-preview-box-width: calc(440px - 24px - 24px);
+  --name-background-color: var(--theotown-creater-secondary);
+  --name-border-color: var(--theotown-creater-secondary-bright);
+  --name-shadow-color: var(--theotown-creater-secondary-shadows);
 }
 
 :root {

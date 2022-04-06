@@ -12,6 +12,7 @@ import Typed from "typed.js";
 import Button from "../button/button";
 import styles from "./modal.module.css";
 import Container from "../container/container";
+import Spin from "../spin/spin";
 const Modal = ({
   title,
   isOpen,
@@ -22,6 +23,7 @@ const Modal = ({
   children,
   typed,
   contentClassName,
+  maskClassName,
   type,
   animationDuration = 300,
   footer,
@@ -68,79 +70,92 @@ const Modal = ({
 
   if (isBrowser) {
     return ReactDOM.createPortal(
-      <CSSTransition
-        in={isOpen}
-        classNames="modal-fade"
-        timeout={animationDuration}
-        unmountOnExit
-      >
-        <div
-          className={`${styles.ctn}`}
-          style={{
-            "--modal-content-offset-x": "0px",
-            "--modal-content-offset-y": "-100px",
-          }}
-        >
-          <Container
-            className={`${styles.content} modal-content ${contentClassName}`}
+      <>
+        {type === "spin" ? (
+          <div className={`${styles.ctn}`}>
+            <div className={`${styles.content}  ${styles.spinMoal} ${contentClassName}`}>
+              <Spin />
+              {children}
+            </div>
+
+            <div className={`${styles.mask} ${maskClassName}`}></div>
+          </div>
+        ) : (
+          <CSSTransition
+            in={isOpen}
+            classNames="modal-fade"
+            timeout={animationDuration}
+            unmountOnExit
           >
-            {title ? <div className={styles.title}>{title}</div> : ""}
             <div
+              className={`${styles.ctn}`}
               style={{
-                overflowY: "scroll",
-                overflowX: "hidden",
-                height:'100%'
+                "--modal-content-offset-x": "0px",
+                "--modal-content-offset-y": "-100px",
               }}
             >
-              <div>
-                <div ref={el}>{!typed?.strings ? children : ""}</div>
-              </div>
-            </div>
-
-            <div className={styles.footer}>
-              {footer ? (
-                footer
-              ) : type === "info" ||
-                type === "success" ||
-                type === "error" ||
-                type === "warning" ? (
-                <Button
-                  onClick={() => {
-                    onOk();
+              <Container
+                className={`${styles.content} modal-content ${contentClassName}`}
+              >
+                {title ? <div className={styles.title}>{title}</div> : ""}
+                <div
+                  style={{
+                    overflowY: "scroll",
+                    overflowX: "hidden",
+                    height: "100%",
                   }}
                 >
-                  {okButtonText}
-                </Button>
-              ) : (
-                <>
-                  <Button
-                    onClick={() => {
-                      onOk();
-                    }}
-                  >
-                    {okButtonText}
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      onCancel();
-                    }}
-                    type="secondary"
-                  >
-                    {cancelButtonText}
-                  </Button>
-                </>
-              )}
-            </div>
-          </Container>
+                  <div>
+                    <div ref={el}>{!typed?.strings ? children : ""}</div>
+                  </div>
+                </div>
 
-          <div
-            className={styles.mask}
-            onClick={() => {
-              onCancel();
-            }}
-          ></div>
-        </div>
-      </CSSTransition>,
+                <div className={styles.footer}>
+                  {footer ? (
+                    footer
+                  ) : type === "info" ||
+                    type === "success" ||
+                    type === "error" ||
+                    type === "warning" ? (
+                    <Button
+                      onClick={() => {
+                        onOk();
+                      }}
+                    >
+                      {okButtonText}
+                    </Button>
+                  ) : (
+                    <>
+                      <Button
+                        onClick={() => {
+                          onOk();
+                        }}
+                      >
+                        {okButtonText}
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          onCancel();
+                        }}
+                        type="secondary"
+                      >
+                        {cancelButtonText}
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </Container>
+
+              <div
+                className={`${styles.mask} ${maskClassName}`}
+                onClick={() => {
+                  onCancel();
+                }}
+              ></div>
+            </div>
+          </CSSTransition>
+        )}
+      </>,
       document.body
     );
   } else {
@@ -148,7 +163,7 @@ const Modal = ({
   }
 };
 
-["info", "success", "error", "warning", "confirm"].forEach((item) => {
+["info", "success", "error", "warning", "confirm","spin"].forEach((item) => {
   Modal[item] = ({ ...props }) => {
     let div = document.createElement("div");
     let currentConfig = Object.assign({}, props);
@@ -160,6 +175,7 @@ const Modal = ({
       if (unmountResult && div.parentNode) {
         div.parentNode.removeChild(div);
       }
+      document.body.classList.remove("modal-open");
     };
 
     const render = (config) => {
@@ -204,6 +220,7 @@ const HOCModal = (Component) => {
     content,
     typed,
     contentClassName,
+    maskClassName,
     destroy,
     type,
     animationDuration = 300,
@@ -238,6 +255,7 @@ const HOCModal = (Component) => {
         onCancel={onCancel2}
         typed={typed}
         contentClassName={contentClassName}
+        maskClassName={maskClassName}
         type={type}
         {...props}
       >

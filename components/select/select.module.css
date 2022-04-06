@@ -2,6 +2,9 @@
   position: relative;
 }
 
+.ctn:active {
+  z-index: 999999 !important;
+}
 
 .checked > img {
   opacity: 1 !important;
@@ -12,9 +15,13 @@
   position: absolute;
   margin-top: calc(-4 * var(--name-private-shadow-spread)) !important;
   padding: 5px 18px;
-  z-index: 999999;
-  height: 400px;
+  z-index: 999999 !important;
+  max-height: 400px;
   overflow-y: scroll;
+}
+
+.dropDown:active {
+  transform: translateY(0px);
 }
 
 .body {

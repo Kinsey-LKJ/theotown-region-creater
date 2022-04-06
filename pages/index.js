@@ -55,6 +55,10 @@ export default function Home() {
   const [regionSize, setRegionSize] = useState(16);
   const [singleCity, setSingleCity] = useState(false);
   const [previewCanvas, setPreviewCanvas] = useState(null);
+  const [realMap, setRealMap] = useState(null);
+  const [currentAdcode, setCurrentAdcode] = useState("theo-image");
+
+  const amapRef = useRef(); //通过ref调用子组件的方法
 
   const changeCitySizeState = (value) => {
     if (value === 1) {
@@ -132,20 +136,163 @@ export default function Home() {
     return obj;
   };
 
+  const previewModal = (canvas) => {
+    let modal = Modal.confirm({
+      title: "预览",
+      // onOk: () => {
+      //   Modal.confirm({
+      //     title: "注意事项",
+      //     content:
+      //       "在生成代码之前，请确保已打开西奥小镇中的实验室功能，以把代码粘贴到控制台中。最终能否成功生成地图与区域大小、城市大小以及设备的性能有关，如果区域、城市过大可能会导致在生成时游戏闪退、卡死，由此导致的所有问题与本站无关，请自行承担后果，如果你同意自行承担所有后果，请点击“确认生成”，若你不同意，请点击“取消”。",
+      //     okButtonText: "确认生成",
+      //     onOk: () => {
+      //       setModalOpen(true);
+      //     },
+      //   });
+      // },
+      footer: (
+        <>
+          {realMap ? (
+            <Button
+              download={`${currentAdcode}.PNG`}
+              href={canvas?.toDataURL("image/png")}
+              onClick={() => {
+                let moadl2 = Modal.confirm({
+                  title: "导入图片说明",
+                  content: (
+                    <>
+                      已开始下载地图，
+                      请将已下载好的地图放入西奥小镇游戏的根目录的 picture
+                      文件夹中，请不要修改文件名称。若未开始下载请返回上一步重新下载
+                    </>
+                  ),
+                  onOk: () => {
+                    setModalOpen(true);
+                    moadl2.destroy();
+                  },
+                  okButtonText: "下一步",
+                  cancelButtonText: "上一步",
+                });
+              }}
+            >
+              下一步：下载图片
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                // modal.destroy();
+                setModalOpen(true);
+              }}
+            >
+              下一步
+            </Button>
+          )}
+
+          <Button
+            onClick={() => {
+              modal.destroy();
+            }}
+            type="secondary"
+          >
+            取消
+          </Button>
+        </>
+      ),
+      contentClassName: styles.previewModal,
+      content: (
+        <div
+          style={{
+            display: "grid",
+            gridGap: "12px",
+          }}
+        >
+          {!singleCity ? (
+            <div
+              className={styles.mapPreviewBox}
+              style={{
+                gridTemplateColumns: `repeat(${citys}, 1fr)`,
+                gridTemplateRows: `repeat(${citys}, 1fr)`,
+              }}
+            >
+              {[...Array(citys * citys).keys()].map((item) => {
+                return <div key={item}></div>;
+              })}
+
+              <div className={styles.mapPreviewMapName}>
+                {name ? name : "未命名区域"}
+              </div>
+
+              {realMap ? <img src={canvas.toDataURL()} /> : ""}
+            </div>
+          ) : (
+            <div
+              className={styles.mapPreviewBox}
+              style={{
+                gridTemplateColumns: "1fr",
+                gridTemplateRows: "1fr",
+              }}
+            >
+              <div></div>
+              <div className={styles.mapPreviewMapName}>
+                {name ? name : "未命名区域"}
+              </div>
+              {realMap ? <img src={canvas.toDataURL()} /> : ""}
+            </div>
+          )}
+
+          <div>
+            单个城市大小:
+            {!singleCity
+              ? `${(citySize / 8) * 512}格 * ${(citySize / 8) * 512}格`
+              : `${(regionSize / 8) * 512}格 * ${(regionSize / 8) * 512}格`}
+          </div>
+
+          <div>
+            区域总大小:
+            {`${(regionSize / 8) * 512}格 * ${(regionSize / 8) * 512}格`}
+          </div>
+
+          <div>种子:{seedValue}</div>
+
+          <div>沙漠:{desert ? "开启" : "关闭"}</div>
+
+          <div>地形:{terrain ? "开启" : "关闭"}</div>
+
+          <div>树木:{trees ? "开启" : "关闭"}</div>
+
+          <div>装饰:{decoration ? "开启" : "关闭"}</div>
+        </div>
+      ),
+    });
+  };
+
   let code = `cr:${JSON.stringify({
     name: name === "" ? "未命名区域" : name,
-    seed: seedValue,
+    bmp: realMap ? `/pictures/${currentAdcode}.PNG` : 'NULL',
+    seed: realMap ? "NULL" : seedValue,
     desert: desert,
     terrain: terrain,
     trees: trees,
     decoration: decoration,
     size: regionSize,
     maps: "STRING",
+
   })}`;
   code = code.replace(
     '"maps":"STRING"',
     `"maps":[${getMap(regionSize, !singleCity ? citySize : regionSize)}]`
   );
+
+  if (realMap){
+    code = code.replace(
+      '"seed":"NULL",',''
+    )
+  }else {
+    code = code.replace(
+      '"bmp":"NULL",',''
+    )
+  }
+
 
   let citys = regionSize / citySize;
 
@@ -170,61 +317,80 @@ export default function Home() {
           placeholder="请输入区域名称"
           label="区域名称"
         ></Input>
-        <div className={styles.seedInputBox}>
-          <Input
-            value={seedValue}
-            onChange={setSeedValue}
-            placeholder={"请输入种子"}
-            label="种子"
-          ></Input>
-          <svg
-            width="36"
-            height="36"
-            viewBox="0 0 36 36"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className={styles.seedDice}
-            onClick={() => {
-              rondomSeed(10);
-            }}
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M32 11H28V13H24V15H20V17H18V33H20V31H24V29H28V27H32V11Z"
-              fill="#676767"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M4 11H8V13H12V15H16V17H18V33H16V31H12V29H8V27H4V11Z"
-              fill="#C5C5C5"
-            />
-            <path d="M13 19H9V23H13V19Z" fill="black" />
-            <path d="M30 17H26V21H30V17Z" fill="black" />
-            <path d="M24 23H20V27H24V23Z" fill="black" />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M20 3H16V5H12V7H8V9H4V11H8V13H12V15H16V17H20V15H24V13H28V11H32V9H28V7H24V5H20V3Z"
-              fill="white"
-            />
-            <path d="M14 9H10V11H14V9Z" fill="black" />
-            <path d="M20 9H16V11H20V9Z" fill="black" />
-            <path d="M26 9H22V11H26V9Z" fill="black" />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M20 1H16V3H12V5H8V7H4V9H2V27H4V29H8V31H12V33H16V35H20V33H24V31H28V29H32V27H34V9H32V7H28V5H24V3H20V1ZM20 3V5H24V7H28V9H32V27H28V29H24V31H20V33H16V31H12V29H8V27H4V9H8V7H12V5H16V3H20Z"
-              fill="black"
-            />
-          </svg>
-        </div>
 
-        <Amap
-          previewCanvas={previewCanvas}
-          setPreviewCanvas={setPreviewCanvas}
-        ></Amap>
+        <div
+          style={{
+            display: "grid",
+            alignItems: "center",
+            gridTemplateColumns: "auto auto",
+            gridGap: "4px",
+            fontSize: "20px",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>真实地图</div>{" "}
+          <Switch checked={realMap} onChange={setRealMap}></Switch>
+        </div>
+        {realMap ? (
+          <Amap
+            previewCanvas={previewCanvas}
+            setPreviewCanvas={setPreviewCanvas}
+            amapRef={amapRef}
+            setCurrentAdcode={setCurrentAdcode}
+          ></Amap>
+        ) : (
+          <div className={styles.seedInputBox}>
+            <Input
+              value={seedValue}
+              onChange={setSeedValue}
+              placeholder={"请输入种子"}
+              label="种子"
+            ></Input>
+            <svg
+              width="36"
+              height="36"
+              viewBox="0 0 36 36"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className={styles.seedDice}
+              onClick={() => {
+                rondomSeed(10);
+              }}
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M32 11H28V13H24V15H20V17H18V33H20V31H24V29H28V27H32V11Z"
+                fill="#676767"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M4 11H8V13H12V15H16V17H18V33H16V31H12V29H8V27H4V11Z"
+                fill="#C5C5C5"
+              />
+              <path d="M13 19H9V23H13V19Z" fill="black" />
+              <path d="M30 17H26V21H30V17Z" fill="black" />
+              <path d="M24 23H20V27H24V23Z" fill="black" />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M20 3H16V5H12V7H8V9H4V11H8V13H12V15H16V17H20V15H24V13H28V11H32V9H28V7H24V5H20V3Z"
+                fill="white"
+              />
+              <path d="M14 9H10V11H14V9Z" fill="black" />
+              <path d="M20 9H16V11H20V9Z" fill="black" />
+              <path d="M26 9H22V11H26V9Z" fill="black" />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M20 1H16V3H12V5H8V7H4V9H2V27H4V29H8V31H12V33H16V35H20V33H24V31H28V29H32V27H34V9H32V7H28V5H24V3H20V1ZM20 3V5H24V7H28V9H32V27H28V29H24V31H20V33H16V31H12V29H8V27H4V9H8V7H12V5H16V3H20Z"
+                fill="black"
+              />
+            </svg>
+          </div>
+        )}
 
         <div className={styles.checkBoxs}>
           <CheckBox checked={trees} onChange={setTrees}>
@@ -249,6 +415,7 @@ export default function Home() {
             justifyContent: "space-between",
             fontSize: "20px",
             alignItems: "center",
+            zIndex: 9,
           }}
         >
           <div
@@ -271,12 +438,8 @@ export default function Home() {
                   content: (
                     <div>
                       当开启单一城市后，一个区域将会只包含一个城市，也就是区域大小等于城市大小，通过此项设置，你可以获得一个非常大的城市，甚至可以超过最大单个城市为
-                      512 * 512 的限制，但游戏会有 bug 产生，目前已知的 bug 有:
-                      <br />
-                      1、小地图定位不准确。
-                      <br />
-                      目前能够成功创建的最大单个城市大小为 26（1664格 *
-                      1664格），测试机型为 iPhone 13
+                      512 * 512 的限制。 目前能够成功创建的最大单个城市大小为
+                      26（1664格 * 1664格），测试机型为 iPhone 13
                       Pro，如果你成功生成了更大的单个城市，请联系我，我会将最高记录更新成你的。
                     </div>
                   ),
@@ -328,7 +491,7 @@ export default function Home() {
                     onClick={() => {
                       Modal.info({
                         content:
-                          "表示组成一个区域中城市的大小，1个单位代表游戏中 64格*64格，建议不要设置的太小。",
+                          "表示组成一个区域中城市的大小，1个单位代表游戏中 64格*64格。",
                         title: "最小城市单元",
                         okButtonText: "我知道了",
                       });
@@ -485,89 +648,18 @@ export default function Home() {
 
         <Button
           onClick={() => {
-            let modal = Modal.confirm({
-              title: "预览",
-              onOk: () => {
-                Modal.confirm({
-                  title: "注意事项",
-                  content:
-                    "在生成代码之前，请确保已打开西奥小镇中的实验室功能，以把代码粘贴到控制台中。最终能否成功生成地图与区域大小、城市大小以及设备的性能有关，如果区域、城市过大可能会导致在生成时游戏闪退、卡死，由此导致的所有问题与本站无关，请自行承担后果，如果你同意自行承担所有后果，请点击“确认生成”，若你不同意，请点击“取消”。",
-                  okButtonText: "确认生成",
-                  onOk: () => {
-                    setModalOpen(true);
-                  },
-                });
-              },
-              contentClassName: styles.previewModal,
-              okButtonText: "下一步",
-              content: previewCanvas ? (
-                <img src={previewCanvas.toDataURL()} />
-              ) : (
-                <div
-                  style={{
-                    display: "grid",
-                    gridGap: "12px",
-                  }}
-                >
-                  {!singleCity ? (
-                    <div
-                      className={styles.mapPreviewBox}
-                      style={{
-                        gridTemplateColumns: `repeat(${citys}, 1fr)`,
-                        gridTemplateRows: `repeat(${citys}, 1fr)`,
-                      }}
-                    >
-                      {[...Array(citys * citys).keys()].map((item) => {
-                        return <div key={item}></div>;
-                      })}
-
-                      <div className={styles.mapPreviewMapName}>
-                        {name ? name : "未命名区域"}
-                      </div>
-                    </div>
-                  ) : (
-                    <div
-                      className={styles.mapPreviewBox}
-                      style={{
-                        gridTemplateColumns: "1fr",
-                        gridTemplateRows: "1fr",
-                      }}
-                    >
-                      <div></div>
-                      <div className={styles.mapPreviewMapName}>
-                        {name ? name : "未命名区域"}
-                      </div>
-                    </div>
-                  )}
-
-                  <div>
-                    单个城市大小:
-                    {!singleCity
-                      ? `${(citySize / 8) * 512}格 * ${(citySize / 8) * 512}格`
-                      : `${(regionSize / 8) * 512}格 * ${
-                          (regionSize / 8) * 512
-                        }格`}
-                  </div>
-
-                  <div>
-                    区域总大小:
-                    {`${(regionSize / 8) * 512}格 * ${
-                      (regionSize / 8) * 512
-                    }格`}
-                  </div>
-
-                  <div>种子:{seedValue}</div>
-
-                  <div>沙漠:{desert ? "开启" : "关闭"}</div>
-
-                  <div>地形:{terrain ? "开启" : "关闭"}</div>
-
-                  <div>树木:{trees ? "开启" : "关闭"}</div>
-
-                  <div>装饰:{decoration ? "开启" : "关闭"}</div>
-                </div>
-              ),
-            });
+            if (realMap) {
+              let moadl = Modal.spin({
+                content: "正在生成地图...",
+                maskClassName: styles.spinModal,
+              });
+              amapRef.current((canvas) => {
+                moadl.destroy();
+                previewModal(canvas);
+              });
+            } else {
+              previewModal();
+            }
           }}
         >
           立即生成
@@ -579,6 +671,39 @@ export default function Home() {
           }}
           footer={
             <>
+              {/* {realMap ? (
+                <Button
+                  onClick={() => {
+                    let moadl = Modal.info({
+                      title: "导入图片说明",
+                      content:
+                        "要使用图片创建地图，需要将已下载好的地图放入西奥小镇游戏的根目录的 picture 文件夹中，请不要修改文件名称。",
+                      footer: (
+                        <CopyToClipboard text={code}>
+                          <Button
+                            onClick={() => {
+                              moadl.destroy();
+                              Modal.info({
+                                title: "复制成功!",
+                                content: `请粘贴到西奥小镇中的控制台中，并点击运行按钮，等待提示“ Region ${
+                                  name ? name : "未命名区域"
+                                } successfully created. You have to restart to see any effect. ” 后即为成功，重启游戏后即可看到你的地图。如果在执行代码时出现闪退，有极大概率创建地图出错了，请将区域大小调笑或将城市大小调大，然后重新尝试一下。`,
+                              });
+                              setModalOpen(false);
+                            }}
+                          >
+                            下一步：复制代码到剪贴板
+                          </Button>
+                        </CopyToClipboard>
+                      ),
+                    });
+                  }}
+                >
+                  下一步：下载地图
+                </Button>
+              ) : (
+                ""
+              )} */}
               <CopyToClipboard text={code}>
                 <Button
                   onClick={() => {
@@ -590,18 +715,18 @@ export default function Home() {
                     });
                     setModalOpen(false);
                   }}
-
                 >
-                  复制到剪贴板
+                  复制代码到剪贴板
                 </Button>
               </CopyToClipboard>
+
               <Button
                 onClick={() => {
                   setModalOpen(false);
                 }}
                 type="secondary"
               >
-                关闭
+                上一步
               </Button>
             </>
           }

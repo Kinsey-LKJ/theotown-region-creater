@@ -40,17 +40,14 @@
 }
 
 .inline-box {
-  --name-private-background-color: var(
-    --name-background-color,
+  --name-private-background-color: var(--name-background-color,
     var(--theotown-creater-primary)
   );
   --name-private-border-width: var(--name-border-width, 3px);
-  --name-private-border-color: var(
-    --name-border-color,
+  --name-private-border-color: var(--name-border-color,
     var(--theotown-creater-primary-bright)
   );
-  --name-private-shadow-color: var(
-    --name-shadow-color,
+  --name-private-shadow-color: var(--name-shadow-color,
     var(--theotown-creater-primary-shadows)
   );
   --name-private-shadow-spread: calc(-1 * var(--name-private-border-width));
@@ -76,7 +73,7 @@
     var(--name-private-border-width) var(--name-private-border-width);
 }
 
-.box:active {
+.box.interactive:active {
   transform: translateY(4px);
   --name-private-shadow-1: 0px calc(0 * var(--name-private-shadow-spread)) 0px
     var(--theotown-creater-secondary-shadows);

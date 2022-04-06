@@ -15,8 +15,9 @@ const Select = ({data, defaultValue = null ,placeholder="请选择",onChange=() 
   }, [isOpen]);
 
   useEffect(() => {
-    onChange(_value)
-    console.log(1)
+    if(_value) {
+      onChange(_value)
+    }
   },[_value])
 
   const toggleOpen = () => {
@@ -32,10 +33,14 @@ const Select = ({data, defaultValue = null ,placeholder="请选择",onChange=() 
   };
 
   const getLabel = (_value) => {
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].value === _value) {
-        return data[i].label;
+    if(data?.length >= 0) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].value === _value) {
+          return data[i].label;
+        } 
       }
+    } else {
+      return undefined
     }
   };
 
@@ -49,7 +54,7 @@ const Select = ({data, defaultValue = null ,placeholder="请选择",onChange=() 
           <i></i>
         </div>
 
-        {_value ? getLabel(_value) : placeholder}
+        {_value ? getLabel(_value) ?  getLabel(_value) : placeholder : placeholder}
 
         <svg
           version="1.1"

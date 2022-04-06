@@ -1,9 +1,28 @@
+.ctn {
+    display: grid;
+    grid-gap: 24px;
+}
+
+
 .map {
-    width: 100%;
-    height: 432px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
 }
 
 .map:global(.print) {
     width: 880px;
     height: 880px;
+}
+
+.mapBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.mapSpin {
+    position: absolute;
+    z-index: 1;
 }

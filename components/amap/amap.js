@@ -1,20 +1,63 @@
 import AMapLoader from "@amap/amap-jsapi-loader";
 import Select from "../select/select";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useImperativeHandle, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import styles from "./amap.module.css";
+import Container from "../container/container";
+import Spin from "../spin/spin";
 
-function Amap({previewCanvas,setPreviewCanvas}) {
+function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
   const [imgSrc, setImgSrc] = useState(null);
   const mapRef = useRef();
+  const ctnRef = useRef()
   const [AMAP, setAMAP] = useState(null);
   const [map, setMap] = useState(null);
   const [province, setProvince] = useState(null);
   const [adcode, setAdcode] = useState(null);
+  const [level, setLevel] = useState(null);
   const [provinceData, setProvinceData] = useState(null);
   const [cityData, setCityData] = useState(null);
-  const [countyData, setCountyData] = useState(null);
+  const [districtData, setDistrictData] = useState(null);
   const [currentProvince, setCurrentProvince] = useState(null);
+  const [currentCity, setCurrentCity] = useState(null);
+  const [currentDistrict, setCurrentDistrictCity] = useState(null);
+  const [provinceObjectData, setProvinceObjectData] = useState(null);
+  const [mapLoading, setMapLoading] = useState(true);
+
+  useImperativeHandle(amapRef, () => {
+    return privewMap;
+  });
+
+
+  useEffect(() => {
+    ctnRef.current.style.cssText += `
+      --private-map-ctn-height:${ctnRef.current.offsetWidth}px;
+    `
+  },[])
+
+  useEffect(() => {
+    if (currentProvince) {
+      console.log(currentProvince);
+      setCityData(provinceObjectData[currentProvince].districts);
+
+      if (currentCity) {
+        setDistrictData(null);
+      }
+    }
+  }, [currentProvince]);
+
+  useEffect(() => {
+    if (currentCity) {
+      setDistrictData(
+        provinceObjectData[currentProvince].districtsObject[currentCity]
+          .districts
+      );
+    }
+  }, [currentCity]);
+
+  useEffect(() => {
+    console.log(level);
+  }, [level]);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,14 +66,60 @@ function Amap({previewCanvas,setPreviewCanvas}) {
       );
       if (response.ok) {
         let json = await response.json();
-
-        setProvinceData(
+        console.log(
           json.districts[0].districts.map((item) => {
             item.label = item.name;
             item.value = item.adcode;
             return item;
           })
         );
+
+        let data = json.districts[0].districts.map((province, i) => {
+          province.label = province.name;
+          province.value = province.adcode;
+          province.districts.push({
+            name: "不选择",
+            adcode: province.adcode,
+            level: "province",
+            districts: [],
+          });
+          province.districts.map((city, j) => {
+            city.label = city.name;
+            city.value = city.adcode;
+            city.districts.push({
+              name: "不选择",
+              adcode: city.adcode,
+              level: "city",
+              districts: [],
+            });
+            city.districts.map((district) => {
+              district.label = district.name;
+              district.value = district.adcode;
+            });
+          });
+
+          return province;
+        });
+        setProvinceData(data);
+
+        let obj = {};
+
+        data.forEach((item) => {
+          obj[item.adcode] = item;
+          obj[item.adcode].districtsObject = {};
+          item.districts.forEach((city) => {
+            // obj[item.adcode].districtsObject[city.adcode] = city;
+            obj[item.adcode].districtsObject[city.adcode] = city;
+            obj[item.adcode].districtsObject[city.adcode].districtsObject = {};
+            city.districts.forEach((district) => {
+              obj[item.adcode].districtsObject[city.adcode].districtsObject[
+                district.adcode
+              ] = district;
+            });
+          });
+        });
+        console.log(obj);
+        setProvinceObjectData(obj);
       } else {
         alert("HTTP-Error: " + response.status);
       }
@@ -50,9 +139,11 @@ function Amap({previewCanvas,setPreviewCanvas}) {
         setMap(
           new AMap.Map("Map", {
             center: [114.057939, 22.543527],
-            zoom: 9,
+            zoom: 6,
           })
         );
+
+        setMapLoading(false);
 
         // setProvince(
         //   new AMap.DistrictLayer.Province({
@@ -63,7 +154,7 @@ function Amap({previewCanvas,setPreviewCanvas}) {
         //       fill: "green",
         //       "province-stroke": "cornflowerblue",
         //       "city-stroke": "white",
-        //       "county-stroke": "rgba(255,255,255,0.5)",
+        //       "district-stroke": "rgba(255,255,255,0.5)",
         //     },
         //   })
         // );
@@ -98,6 +189,8 @@ function Amap({previewCanvas,setPreviewCanvas}) {
         map.remove(province);
       }
 
+      console.log(adcode);
+
       async function fetchData() {
         let response = await fetch(
           `https://restapi.amap.com/v3/config/district?keywords=${adcode}&subdistrict=0&key=055f82816293ca4e556985a97adca86d`
@@ -108,13 +201,15 @@ function Amap({previewCanvas,setPreviewCanvas}) {
             new AMAP.DistrictLayer.Province({
               zIndex: 12,
               adcode: json.districts[0].adcode,
-              depth: 1,
+              depth: 2,
               styles: {
                 fill: "transparent",
                 "province-stroke": "white",
                 "city-stroke":
-                  typeof adcode === "string" ? "transparent" : "white",
-                // "county-stroke": "rgba(255,255,255,0.5)",
+                  level === "province" || level === "district"
+                    ? "transparent"
+                    : "white",
+                "county-stroke": level === "district" ? "white" : "transparent",
               },
             })
           );
@@ -132,57 +227,88 @@ function Amap({previewCanvas,setPreviewCanvas}) {
     }
   }, [adcode]);
 
-  const printDocument = (domElement, options) => {
+  const printDocument = (domElement, options, callBack) => {
     html2canvas(domElement, options).then((canvas) => {
       canvas.id = "IMG";
-      setPreviewCanvas(canvas)
-      setImgSrc(canvas.toDataURL("image/png"));
+      setPreviewCanvas(canvas);
+      // setImgSrc(canvas.toDataURL("image/png"));
+      mapRef.current.classList.remove("print");
+      callBack(canvas);
     });
   };
 
+  const privewMap = (callBack) => {
+    mapRef.current.classList.add("print");
+    map.setZoom(map.getZoom() + 1);
+    setTimeout(() => {
+      printDocument(
+        mapRef.current,
+        {
+          scale: 2,
+        },
+        callBack
+      );
+    }, 1000);
+  };
+
   return (
-    <div className={styles.ctn}>
-      <div>
-        <div ref={mapRef} id="Map" className={styles.map}></div>
-      </div>
+    <div className={styles.ctn} ref={ctnRef}>
+      <Container
+        pixelTheme="inline-box"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "var(--private-map-ctn-height)",
+          width: "100%",
+        }}
+      >
+        <div className={styles.mapBox}>
+          {mapLoading ? <Spin className={styles.mapSpin}></Spin> : ""}
+
+          <div ref={mapRef} id="Map" className={styles.map}></div>
+        </div>
+      </Container>
+
+      <div>可根据自己的需要手动缩放调整当前选择行政区的位置</div>
+
       <Select
         data={provinceData}
         onChange={(value) => {
           setAdcode(value);
+          setCurrentProvince(value);
+          setLevel(provinceObjectData[value].level);
+          setCurrentAdcode(value)
         }}
+        placeholder="请选择省级行政单位"
       ></Select>
 
-      <a
-        onClick={() => {
-          mapRef.current.classList.add("print");
-          map.setZoom(map.getZoom() + 1);
-          setTimeout(() => {
-            printDocument(mapRef.current, {
-              scale: 2,
-            });
-          }, 1000);
+      <Select
+        data={cityData}
+        onChange={(value) => {
+          setAdcode(value);
+          setCurrentCity(value);
+          setLevel(
+            provinceObjectData[currentProvince].districtsObject[value].level
+          );
+          setCurrentAdcode(value)
         }}
-      >
-        预览
-      </a>
-      <a
-        download="img.png"
-        href={imgSrc}
-        onClick={() => {
-          let canvas = document.getElementById("IMG");
-          document.body.removeChild(canvas);
-        }}
-      >
-        下载
-      </a>
+        placeholder="请选择市级行政单位"
+      ></Select>
 
-      <button
-        onClick={() => {
-          setAdcode([440300]);
+      <Select
+        data={districtData}
+        onChange={(value) => {
+          setAdcode(value);
+          setCurrentDistrictCity(value);
+          setLevel(
+            provinceObjectData[currentProvince].districtsObject[currentCity]
+              .districtsObject[value].level
+          );
+          setCurrentAdcode(value)
         }}
-      >
-        深圳
-      </button>
+        placeholder="请选择区/县级行政单位"
+      ></Select>
     </div>
   );
 }

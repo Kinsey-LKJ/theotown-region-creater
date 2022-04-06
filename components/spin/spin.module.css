@@ -1,0 +1,19 @@
+.ctn {
+    --name-private-fill:var(--name-fill,var(--theotown-creater-primary));
+    animation: spin-animation 1s steps(8, end) infinite;
+}
+
+.ctn > * {
+    fill: var(--name-private-fill);
+}
+
+
+
+@keyframes spin-animation {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
