@@ -10,8 +10,8 @@
 }
 
 .map:global(.print) {
-    width: 880px;
-    height: 880px;
+    width: calc(var(--private-map-ctn-height) * 2);
+    height: calc(var(--private-map-ctn-height) * 2);
 }
 
 .mapBox {
