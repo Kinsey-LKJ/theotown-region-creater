@@ -268,7 +268,7 @@ export default function Home() {
 
   let code = `cr:${JSON.stringify({
     name: name === "" ? "未命名区域" : name,
-    bmp: realMap ? `/pictures/${currentAdcode}.PNG` : 'NULL',
+    bmp: realMap ? `/pictures/${currentAdcode}.PNG` : "NULL",
     seed: realMap ? "NULL" : seedValue,
     desert: desert,
     terrain: terrain,
@@ -276,23 +276,17 @@ export default function Home() {
     decoration: decoration,
     size: regionSize,
     maps: "STRING",
-
   })}`;
   code = code.replace(
     '"maps":"STRING"',
     `"maps":[${getMap(regionSize, !singleCity ? citySize : regionSize)}]`
   );
 
-  if (realMap){
-    code = code.replace(
-      '"seed":"NULL",',''
-    )
-  }else {
-    code = code.replace(
-      '"bmp":"NULL",',''
-    )
+  if (realMap) {
+    code = code.replace('"seed":"NULL",', "");
+  } else {
+    code = code.replace('"bmp":"NULL",', "");
   }
-
 
   let citys = regionSize / citySize;
 
@@ -653,10 +647,13 @@ export default function Home() {
                 content: "正在生成地图...",
                 maskClassName: styles.spinModal,
               });
-              // amapRef.current((canvas) => {
-              //   moadl.destroy();
-              //   previewModal(canvas);
-              // });
+
+              setTimeout(() => {
+                amapRef.current((canvas) => {
+                  moadl.destroy();
+                  previewModal(canvas);
+                });
+              }, 1000);
             } else {
               previewModal();
             }
