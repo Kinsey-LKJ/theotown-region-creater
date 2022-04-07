@@ -653,10 +653,10 @@ export default function Home() {
                 content: "正在生成地图...",
                 maskClassName: styles.spinModal,
               });
-              amapRef.current((canvas) => {
-                moadl.destroy();
-                previewModal(canvas);
-              });
+              // amapRef.current((canvas) => {
+              //   moadl.destroy();
+              //   previewModal(canvas);
+              // });
             } else {
               previewModal();
             }
