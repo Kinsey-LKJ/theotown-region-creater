@@ -47,7 +47,7 @@ const Select = ({data, defaultValue = null ,placeholder="请选择",onChange=() 
   return (
     <div className={`${styles.ctn} box`} ref={selectRef}>
       <div className={styles.body} onClick={toggleOpen}>
-        <div>
+        <div className="pixel-decorate">
           <i></i>
           <i></i>
           <i></i>
@@ -97,7 +97,7 @@ const Select = ({data, defaultValue = null ,placeholder="请选择",onChange=() 
 
       {isOpen ? (
         <div className={`${styles.dropDown} box`}>
-          <div>
+          <div className="pixel-decorate">
             <i></i>
             <i></i>
             <i></i>

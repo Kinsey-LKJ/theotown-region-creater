@@ -12,7 +12,7 @@ const CheckBox = ({ checked, children, field = uuidv4(), onChange }) => {
         }}
       />
       <div className={`${styles.checkedElement} box`}>
-        <div>
+        <div className="pixel-decorate">
           <i></i>
           <i></i>
           <i></i>

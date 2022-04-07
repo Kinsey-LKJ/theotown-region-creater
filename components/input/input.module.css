@@ -1,27 +1,24 @@
+.ctn {
+  --name-private-background-color: var(--name-background-color,var(--theotown-creater-primary));
+  --name-private-border-width: var(--name-border-width, 3px);
+  --name-private-border-color: var(--name-border-color, var(--theotown-creater-primary-bright));
+  --name-private-border-color-focus: var(--name-border-color-focus, var(--theotown-creater-secondary-bright));
+  --name-private-shadow-color: var(--name-shadow-color, var(--theotown-creater-primary-shadows));
+}
+
 .input {
-  width: calc(100% - 8px);
+  width: 100%;
   font-family: "myFirstFont";
   -webkit-appearance: initial;
   border: none;
-  background-color: var(--theotown-creater-secondary-dark);
   color: #fff;
-  padding: 5px 18px;
+  padding: 12px 12px;
   position: relative;
-  z-index: 5;
   text-decoration: none;
-  margin: 4px;
-  box-shadow: 0px 4px 0 0 var(--input-border),
-    4px 0px 0 0 var(--input-border),
-    -4px 0px 0 0 var(--input-border),
-    0px -4px 0 0 var(--input-border),
-    0px -3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
-    3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
-    0px 3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
-    -3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset;
+  margin: 0;
   cursor: pointer;
   outline: none;
   font-size: 16px;
-  --input-border: var(--theotown-creater-secondary-bright);
 }
 
 .input::-webkit-input-placeholder {
@@ -34,11 +31,18 @@
   color: #add8e6;
 }
 
-.input:focus {
-    --input-border:var(--theotown-creater-primary)
+
+.ctn:focus-within *{
+  --name-private-border-color:var(--name-private-border-color-focus)
 }
 
 .label {
   font-size: 20px;
   margin-bottom: 8px;
+}
+
+.pixelDecorate {
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }

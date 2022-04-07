@@ -9,13 +9,13 @@ const Button = ({ children, onClick, type = "primary", download, href ,style}) =
       href={href}
       style={style}
     >
-      <div>
+      <div className="pixel-decorate">
         <i></i>
         <i></i>
         <i></i>
         <i></i>
-        {children}
       </div>
+      {children}
     </a>
   );
 };

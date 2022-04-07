@@ -18,6 +18,10 @@ body {
   --name-background-color: var(--theotown-creater-secondary);
   --name-border-color: var(--theotown-creater-secondary-bright);
   --name-shadow-color: var(--theotown-creater-secondary-shadows);
+  --name-slider-background-color: var(--theotown-creater-secondary);
+  --name-slider-border-color: var(--theotown-creater-secondary-bright);
+  --name-slider-shadow-color: var(--theotown-creater-secondary-shadows);
+  --name-border-color-focus: var(--theotown-creater-primary);
 }
 
 :root {

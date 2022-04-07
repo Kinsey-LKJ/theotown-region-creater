@@ -1,18 +1,35 @@
 import styles from "./switch.module.css";
 import { v4 as uuidv4 } from "uuid";
 
-const Switch = ({ checked,field = uuidv4(), onChange }) => {
+const Switch = ({ checked, field = uuidv4(), onChange }) => {
   return (
     <div className={styles.ctn}>
-      <input checked={checked} type="checkbox" name="" id={`components-name-${field}`} onChange={(e) => {
-          onChange(e.target.checked)
-      }}/>
-      <div>
-          {
-              checked ? '开' : '关'
-          }
+      <div className="pixel-decorate">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
       </div>
-      <label htmlFor={`components-name-${field}`}></label>
+      <input
+        checked={checked}
+        type="checkbox"
+        name=""
+        id={`components-name-${field}`}
+        onChange={(e) => {
+          onChange(e.target.checked);
+        }}
+      />
+      <div className={`box ${styles.icon}`}>{checked ? "开" : "关"}</div>
+
+      <label htmlFor={`components-name-${field}`} className="inline-box">
+        {" "}
+        <div className="pixel-decorate">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+      </label>
     </div>
   );
 };

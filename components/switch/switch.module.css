@@ -3,11 +3,11 @@
   margin: 4px;
   display: flex;
   align-items: center;
-  --size-width: var(--size-switch-large-width);
-  --size-height: var(--size-switch-large-height);
-  --size-switch-large-width: 56px;
-  --size-switch-large-height: 32px;
+  --name-private-width: var(--name-width, 56px);
+  --name-private-height: var(--name-height, 32px);
   font-size: 14px;
+  --name-private-border-color-on: var(--name-border-color-on, var(--theotown-creater-primary-bright));
+  --name-private-background-color-on: var(--name-background-color-on, var(--theotown-creater-primary));
 }
 
 .ctn input {
@@ -17,50 +17,79 @@
 }
 
 .ctn label {
-  width: var(--size-width);
-  height: var(--size-height);
+  width: var(--name-private-width);
+  height: var(--name-private-height);
   background-color: var(--theotown-creater-secondary-dark);
-  display: block;
-  box-shadow: 0px 4px 0 0 var(--input-border), 4px 0px 0 0 var(--input-border),
-    -4px 0px 0 0 var(--input-border), 0px -4px 0 0 var(--input-border),
-    0px -3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
-    3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
-    0px 3px 0 0 var(--theotown-creater-secondary-inline-shadow) inset,
-    -3px 0px 0 0 var(--theotown-creater-secondary-inline-shadow) inset;
-  --input-border: var(--theotown-creater-secondary-bright);
+  display: flex;
+  align-items: center;
   cursor: pointer;
 }
 
-.ctn > div {
-  width: calc((var(--size-width) / 2) - 2px - 4px);
-  height: calc(var(--size-height) - 4px - 8px);
+
+.ctn > label :global(.pixel-decorate) {
+  width: calc((var(--name-private-width) / 2) - 2px - 4px);
+  height: calc(var(--name-private-height) - 4px - 8px);
+  left: calc(5px + 4px);
+  top: auto;
+}
+
+.icon {
+  width: calc((var(--name-private-width) / 2) - 2px - 4px);
+  height: calc(var(--name-private-height) - 4px - 8px);
   position: absolute;
-  background-color: var(--theotown-creater-blue-4);
-  box-shadow: 0px 2px 0 0 var(--theotown-creater-secondary-shadows),
-    2px 0px 0 0 var(--theotown-creater-secondary-shadows),
-    -2px 0px 0 0 var(--theotown-creater-secondary-shadows),
-    0px -2px 0 0 var(--theotown-creater-secondary-shadows);
   left: calc(2px + 4px);
   pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: var(--name-private-border-width) var(--name-private-border-width)  var(--name-private-border-width) var(--name-private-border-width);
+  box-shadow: var(--name-private-border-bottom), var(--name-private-border-left),
+    var(--name-private-border-top), var(--name-private-border-right),
+    inset -1px 0px 0px var(--name-private-border-color),
+    inset 0px -1px 0px var(--name-private-border-color),
+    inset 1px 0px 0px var(--name-private-border-color),
+    inset 0px 1px 0px var(--name-private-border-color);
 }
 
-.ctn > div > div {
+.icon > div {
     width: 68%;
     height: 68%;
     border: 2px solid var(--theotown-creater-secondary-bright);
 }
 
 .ctn input:checked + div {
-    background-color: var(--theotown-creater-primary);
-    box-shadow: 0px 2px 0 0 var(--theotown-creater-primary-shadows),
-    2px 0px 0 0 var(--theotown-creater-primary-shadows),
-    -2px 0px 0 0 var(--theotown-creater-primary-bright),
-    0px -2px 0 0 var(--theotown-creater-primary-bright);
-  left: calc(var(--size-width) - (var(--size-width) / 2));
+  left: calc(var(--name-private-width) - (var(--name-private-width) / 2));
+  --name-private-border-color:var(--name-private-border-color-on);
+  --name-private-background-color:var(--name-private-background-color-on)
 }
+
+.ctn input:checked + div + label > div{
+  left: calc(var(--name-private-width) - (var(--name-private-width) / 2) + 3px);
+  --name-private-border-color:var(--name-private-border-color-on)
+}
+
+
+
+.ctn  > :global(.pixel-decorate) i:nth-child(1) {
+  left: calc(1px + var(--name-private-border-width));
+  top: calc(1px + var(--name-private-border-width));
+}
+
+.ctn > :global(.pixel-decorate) i:nth-child(2)  {
+  right: calc(1px + var(--name-private-border-width));
+  top: calc(1px + var(--name-private-border-width));
+}
+
+.ctn > :global(.pixel-decorate) i:nth-child(3)  {
+  right: calc(1px + var(--name-private-border-width));
+  bottom: calc(1px + var(--name-private-border-width));
+}
+
+.ctn > :global(.pixel-decorate) i:nth-child(4) {
+  left: calc(1px + var(--name-private-border-width));
+  bottom: calc(1px + var(--name-private-border-width));
+}
+
 
 
 
