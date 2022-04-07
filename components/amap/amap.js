@@ -231,7 +231,6 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
     html2canvas(domElement, options).then((canvas) => {
       canvas.id = "IMG";
       setPreviewCanvas(canvas);
-      // setImgSrc(canvas.toDataURL("image/png"));
       mapRef.current.classList.remove("print");
       callBack(canvas);
     });
@@ -239,12 +238,12 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
 
   const privewMap = (callBack) => {
     mapRef.current.classList.add("print");
-    map.setZoom(map.getZoom() + 1);
+    map.setZoom(map.getZoom() + 2);
     setTimeout(() => {
       printDocument(
         mapRef.current,
         {
-          scale: 2,
+          scale: 3,
         },
         callBack
       );

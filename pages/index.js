@@ -157,21 +157,36 @@ export default function Home() {
               download={`${currentAdcode}.PNG`}
               href={canvas?.toDataURL("image/png")}
               onClick={() => {
+                modal.destroy();
                 let moadl2 = Modal.confirm({
                   title: "导入图片说明",
                   content: (
                     <>
-                      已开始下载地图，
-                      请将已下载好的地图放入西奥小镇游戏的根目录的 picture
-                      文件夹中，请不要修改文件名称。若未开始下载请返回上一步重新下载
+                      已开始下载地图，请将下载好的地图放入西奥小镇游戏根目录的
+                      pictures
+                      文件夹中，如果找不到对应的文件夹，请手动新建。请不要修改已下载的地图文件的名称。
+                      <br /> <br />
+                      iOS 路径：文件App-我的iPhone-TheoTown-pictures
+                      <br />
+                      Android 路径：设备根目录-TheoTown-pictures
+                      <br />
+                      <br />
+                      若未开始下载请点击:
+                      <a
+                        download={`${currentAdcode}.PNG`}
+                        href={canvas?.toDataURL("image/png")}
+                        className={styles.downloadButton}
+                      >
+                        手动下载
+                      </a>
                     </>
                   ),
                   onOk: () => {
                     setModalOpen(true);
                     moadl2.destroy();
                   },
-                  okButtonText: "下一步",
-                  cancelButtonText: "上一步",
+                  okButtonText: "下一步：生成控制台代码",
+                  cancelButtonText: "取消",
                 });
               }}
             >
@@ -180,7 +195,7 @@ export default function Home() {
           ) : (
             <Button
               onClick={() => {
-                // modal.destroy();
+                modal.destroy();
                 setModalOpen(true);
               }}
             >
@@ -647,13 +662,10 @@ export default function Home() {
                 content: "正在生成地图...",
                 maskClassName: styles.spinModal,
               });
-
-              setTimeout(() => {
-                amapRef.current((canvas) => {
-                  moadl.destroy();
-                  previewModal(canvas);
-                });
-              }, 1000);
+              amapRef.current((canvas) => {
+                moadl.destroy();
+                previewModal(canvas);
+              });
             } else {
               previewModal();
             }
