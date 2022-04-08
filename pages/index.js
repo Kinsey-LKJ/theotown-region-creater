@@ -60,7 +60,29 @@ export default function Home() {
 
   const amapRef = useRef(); //通过ref调用子组件的方法
 
-
+  useEffect(() => {
+    if (!localStorage.getItem("update")) {
+      Modal.confirm({
+        title: "更新日志 1.0.0",
+        content: (
+          <div>
+            1、支持创建全国任意省、市、区县级行政单位的地图，可还原真实的河流、湖泊、海洋等水源。
+            <br />
+            <br />
+            2、优化了整体的像素风UI（像素风YYDS）。
+            <br />
+            <br />
+            3、其他+10086条 bug 修复。
+          </div>
+        ),
+        okButtonText: "我知道了",
+        cancelButtonText: "不再提示",
+        onCancel: () => {
+          localStorage.setItem('update',true)
+        },
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (realMap) {
