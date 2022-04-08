@@ -52,7 +52,7 @@ export default function Home() {
   const [trees, setTrees] = useState(false);
   const [decoration, setDecoration] = useState(false);
   const [citySize, setCitySize] = useState(4);
-  const [regionSize, setRegionSize] = useState(16);
+  const [regionSize, setRegionSize] = useState(12);
   const [singleCity, setSingleCity] = useState(false);
   const [previewCanvas, setPreviewCanvas] = useState(null);
   const [realMap, setRealMap] = useState(null);
@@ -695,7 +695,7 @@ export default function Home() {
                   onClick={() => {
                     Modal.info({
                       content:
-                        "表示一个区域的总大小，1个单位代表游戏中 64格*64格，此项会极大影响游戏的性能，建议不要设置的太高（建议手机用户不要超过32）。",
+                        "表示一个区域的总大小，1个单位代表游戏中 64格*64格，此项会极大影响游戏的性能，建议不要设置的太高（建议手机用户不要超过20,对自己设备性能有信心的可以调的大一点）。",
                       title: "区域大小",
                       okButtonText: "我知道了",
                     });
