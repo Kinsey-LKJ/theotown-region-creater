@@ -60,6 +60,8 @@ export default function Home() {
 
   const amapRef = useRef(); //通过ref调用子组件的方法
 
+
+
   useEffect(() => {
     if (realMap) {
       setTerrain(false);

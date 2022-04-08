@@ -46,7 +46,6 @@
     inset 0px -1px 0px var(--name-private-border-color),
     inset 1px 0px 0px var(--name-private-border-color),
     inset 0px 1px 0px var(--name-private-border-color);
-    transform: translateY(calc(-1 * var(--name-private-border-width)));
 }
 
 
