@@ -23,7 +23,7 @@
   width: 100%;/* Full-width */
   height: 100%;
   outline: none; /* Remove outline */
-  position: absolute;
+  /* position: absolute; */
   --name-private-slider-background-color: var(
     --name-slider-background-color,
     var(--theotown-creater-primary)

@@ -331,7 +331,7 @@ export default function Home() {
       <Container className={styles.container}>
         <h1>
           TheoTown <br />
-          地图创建工具 <span className={styles.betaSign}>beta</span>
+          地图创建工具 <span className={styles.betaSign}>1.0.0</span>
         </h1>
         <Input
           value={name}
