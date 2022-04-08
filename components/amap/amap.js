@@ -141,7 +141,8 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
             viewMode: "3D",
             center: [114.057939, 22.543527],
             zoom: 7,
-            touchZoomCenter:1
+            touchZoomCenter:1,
+            rotateEnable:false
           })
         );
 
