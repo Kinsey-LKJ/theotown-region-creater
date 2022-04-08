@@ -19,8 +19,6 @@
   width: var(--name-private-width);
   height: var(--name-private-height);
   background-color: var(--theotown-creater-secondary-dark);
-  display: flex;
-  align-items: center;
   cursor: pointer;
 }
 
@@ -48,13 +46,9 @@
     inset 0px -1px 0px var(--name-private-border-color),
     inset 1px 0px 0px var(--name-private-border-color),
     inset 0px 1px 0px var(--name-private-border-color);
+    transform: translateY(calc(-1 * var(--name-private-border-width)));
 }
 
-.icon > div {
-    width: 68%;
-    height: 68%;
-    border: 2px solid var(--theotown-creater-secondary-bright);
-}
 
 .ctn input:checked + div {
   left: calc(var(--name-private-width) - (var(--name-private-width) / 2));
@@ -104,9 +98,9 @@
   --input-border: var(--theotown-creater-secondary-bright);
 } */
 
-.ctn input:checked + div > div{
+/* .ctn input:checked + div > div{
     width: 2px;
     height: 72%;
     background-color: white;
     border: none;
-}
+} */

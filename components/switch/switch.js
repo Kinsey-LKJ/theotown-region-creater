@@ -19,17 +19,20 @@ const Switch = ({ checked, field = uuidv4(), onChange }) => {
           onChange(e.target.checked);
         }}
       />
-      <div className={`box ${styles.icon}`}>{checked ? "开" : "关"}</div>
-
-      <label htmlFor={`components-name-${field}`} className="inline-box">
-        {" "}
+      <div className={`box ${styles.icon}`}>
+        {checked ? "开" : "关"}{" "}
         <div className="pixel-decorate">
           <i></i>
           <i></i>
           <i></i>
           <i></i>
         </div>
-      </label>
+      </div>
+
+      <label
+        htmlFor={`components-name-${field}`}
+        className="inline-box"
+      ></label>
     </div>
   );
 };

@@ -61,10 +61,10 @@ export default function Home() {
   const amapRef = useRef(); //通过ref调用子组件的方法
 
   useEffect(() => {
-    if(realMap){
-      setTerrain(false)
+    if (realMap) {
+      setTerrain(false);
     }
-  },[realMap])
+  }, [realMap]);
 
   const changeCitySizeState = (value) => {
     if (value === 1) {
@@ -321,6 +321,11 @@ export default function Home() {
         justifyItems: "center",
       }}
     >
+      <Head>
+        <title>西奥小镇地图创建工具</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+
       <Container className={styles.container}>
         <h1>
           TheoTown <br />
