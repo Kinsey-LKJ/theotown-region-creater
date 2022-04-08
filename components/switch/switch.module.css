@@ -1,6 +1,5 @@
 .ctn {
   position: relative;
-  margin: 4px;
   display: flex;
   align-items: center;
   --name-private-width: var(--name-width, 56px);

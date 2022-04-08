@@ -6,10 +6,10 @@ import styles from "./amap.module.css";
 import Container from "../container/container";
 import Spin from "../spin/spin";
 
-function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
+function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
   const [imgSrc, setImgSrc] = useState(null);
   const mapRef = useRef();
-  const ctnRef = useRef()
+  const ctnRef = useRef();
   const [AMAP, setAMAP] = useState(null);
   const [map, setMap] = useState(null);
   const [province, setProvince] = useState(null);
@@ -28,12 +28,11 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
     return privewMap;
   });
 
-
   useEffect(() => {
     ctnRef.current.style.cssText += `
       --private-map-ctn-height:${ctnRef.current.offsetWidth}px;
-    `
-  },[])
+    `;
+  }, []);
 
   useEffect(() => {
     if (currentProvince) {
@@ -138,8 +137,10 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
       .then((AMap) => {
         setMap(
           new AMap.Map("Map", {
+            pitch: 0,
+            viewMode: "3D",
             center: [114.057939, 22.543527],
-            zoom: 6,
+            zoom: 7,
           })
         );
 
@@ -168,7 +169,6 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
 
   useEffect(() => {
     if (map) {
-      console.log(map);
       map.setMapStyle("amap://styles/71f0e8e1cac14c502d2a2f5c28ed31bc");
     }
   }, [map]);
@@ -238,7 +238,7 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
 
   const privewMap = (callBack) => {
     mapRef.current.classList.add("print");
-    map.setZoom(map.getZoom() + 2);
+    map.setZoom(map.getZoom() + 1.6);
     setTimeout(() => {
       printDocument(
         mapRef.current,
@@ -247,6 +247,8 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
         },
         callBack
       );
+
+      map.setZoom(map.getZoom() - 1.6);
     }, 1000);
   };
 
@@ -259,7 +261,6 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
           alignItems: "center",
           justifyContent: "center",
           height: "var(--private-map-ctn-height)",
-          width: "100%",
         }}
       >
         <div className={styles.mapBox}>
@@ -269,7 +270,9 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
         </div>
       </Container>
 
-      <div>可根据自己的需要手动缩放调整当前选择行政区的位置</div>
+      <div>
+        白色形状为当前所选的行政区，可根据自己的需要手动缩放调整当前行政区的位置
+      </div>
 
       <Select
         data={provinceData}
@@ -277,7 +280,7 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
           setAdcode(value);
           setCurrentProvince(value);
           setLevel(provinceObjectData[value].level);
-          setCurrentAdcode(value)
+          setCurrentAdcode(value);
         }}
         placeholder="请选择省级行政单位"
       ></Select>
@@ -290,7 +293,7 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
           setLevel(
             provinceObjectData[currentProvince].districtsObject[value].level
           );
-          setCurrentAdcode(value)
+          setCurrentAdcode(value);
         }}
         placeholder="请选择市级行政单位"
       ></Select>
@@ -304,7 +307,7 @@ function Amap({ setPreviewCanvas, amapRef ,setCurrentAdcode}) {
             provinceObjectData[currentProvince].districtsObject[currentCity]
               .districtsObject[value].level
           );
-          setCurrentAdcode(value)
+          setCurrentAdcode(value);
         }}
         placeholder="请选择区/县级行政单位"
       ></Select>

@@ -102,6 +102,7 @@
   margin: var(--name-private-border-width) var(--name-private-border-width)
     var(--name-private-border-width) var(--name-private-border-width);
         position: relative;
+        transform: translateX(calc(-1 * var(--name-private-slider-border-width)));
     z-index: 2;
 }
 
@@ -146,6 +147,7 @@
   margin: var(--name-private-border-width) var(--name-private-border-width)
     var(--name-private-border-width) var(--name-private-border-width);
         position: relative;
+        transform: translateX(calc(-1 * var(--name-private-slider-border-width)));
     z-index: 2;
 }
 

@@ -60,6 +60,12 @@ export default function Home() {
 
   const amapRef = useRef(); //通过ref调用子组件的方法
 
+  useEffect(() => {
+    if(realMap){
+      setTerrain(false)
+    }
+  },[realMap])
+
   const changeCitySizeState = (value) => {
     if (value === 1) {
       Modal.info({
@@ -338,7 +344,50 @@ export default function Home() {
             justifyContent: "space-between",
           }}
         >
-          <div>真实地图</div>{" "}
+          <div
+            style={{
+              display: "grid",
+              alignItems: "center",
+              gridTemplateColumns: "auto auto",
+              gridGap: "4px",
+            }}
+          >
+            创建真实地图{" "}
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              onClick={() => {
+                Modal.info({
+                  content: (
+                    <div>
+                      当开启创建真实地图时，你可以选择任意一个行政区来创建地图。
+                    </div>
+                  ),
+                  title: "真实地图说明",
+                  okButtonText: "我知道了",
+                });
+              }}
+              style={{
+                cursor: "pointer",
+              }}
+            >
+              <path
+                d="M3 12V8H4V6H5V5H6V4H8V3H12V4H14V5H15V6H16V8H17V12H16V14H15V15H14V16H12V17H8V16H6V15H5V14H4V12H3Z"
+                fill="white"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M8 3L11.9999 3V2H7.9999V2.9998H6V3.9998H5V4.9998H4V5.9998H3V7.9998H2V11.9998H3V13.9998H4V14.9998H5V15.9998H6V16.9998H8V15.9998H6V14.9998H5V13.9998H4V11.9998H3V7.9998H4V5.9998H5V4.9998H6V3.9998H8V3ZM17 7.9998V5.9998H16V4.9998H15V3.9998H14V2.9998H12V3.9998H14V4.9998H15V5.9998H16V7.9998H17ZM17 11.9998H18V7.9998H17V11.9998ZM16 13.9998H17V11.9998H16V13.9998ZM15 14.9998V13.9998H16V14.9998H15ZM14 15.9998V14.9998H15V15.9998H14ZM14 15.9998V16.9998H12V15.9998H14ZM11.9999 18H7.9999L7.9999 17H11.9999V18Z"
+                fill="black"
+              />
+              <rect x="9" y="6" width="2" height="2" fill="black" />
+              <rect x="9" y="9" width="2" height="5" fill="black" />
+            </svg>
+          </div>
           <Switch checked={realMap} onChange={setRealMap}></Switch>
         </div>
         {realMap ? (
@@ -411,9 +460,14 @@ export default function Home() {
           <CheckBox checked={desert} onChange={setDesert}>
             开启沙漠
           </CheckBox>
-          <CheckBox checked={terrain} onChange={setTerrain}>
-            开启地形
-          </CheckBox>
+
+          {!realMap ? (
+            <CheckBox checked={terrain} onChange={setTerrain}>
+              开启地形
+            </CheckBox>
+          ) : (
+            ""
+          )}
         </div>
 
         <div
@@ -735,7 +789,7 @@ export default function Home() {
                 }}
                 type="secondary"
               >
-                上一步
+                取消
               </Button>
             </>
           }

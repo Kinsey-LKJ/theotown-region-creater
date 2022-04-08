@@ -3,7 +3,7 @@ import styles from "./button.module.css";
 const Button = ({ children, onClick, type = "primary", download, href ,style}) => {
   return (
     <a
-      className={`${styles.button} ${styles[type]} box`}
+      className={`${styles.button} ${styles[type]} box interactive`}
       onClick={onClick}
       download={download}
       href={href}
