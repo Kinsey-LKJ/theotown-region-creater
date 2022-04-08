@@ -141,6 +141,7 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
             viewMode: "3D",
             center: [114.057939, 22.543527],
             zoom: 7,
+            touchZoomCenter:1
           })
         );
 
@@ -175,11 +176,8 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
 
   useEffect(() => {
     if (map && province) {
-      console.log(province);
-
       map.add(province);
       map.setFitView();
-      console.log(map.getLayers());
     }
   }, [map, province]);
 
