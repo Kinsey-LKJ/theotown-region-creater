@@ -12,7 +12,8 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import styles from "../styles/Home.module.css";
 import Switch from "../components/switch/switch";
 import dynamic from "next/dynamic";
-import { ReImg } from "reimg";
+
+import {saveAs} from 'file-saver';
 
 const Amap = dynamic(() => import("../components/amap/amap"), { ssr: false });
 
@@ -186,7 +187,9 @@ export default function Home() {
           {realMap ? (
             <Button
               onClick={() => {
-                ReImg.fromCanvas(previewCanvas).downloadPng()
+                canvas.toBlob((blob) => {
+                  saveAs(blob, "image.png")
+                })
                 modal.destroy();
                 let moadl2 = Modal.confirm({
                   title: "导入图片说明",
@@ -205,7 +208,7 @@ export default function Home() {
                       <a
                         className={styles.downloadButton}
                         onClick={() => {
-                          ReImg.fromCanvas(previewCanvas).downloadPng()
+
                         }}
                       >
                         手动下载
