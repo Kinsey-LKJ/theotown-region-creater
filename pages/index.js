@@ -12,6 +12,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import styles from "../styles/Home.module.css";
 import Switch from "../components/switch/switch";
 import dynamic from "next/dynamic";
+import { ReImg } from "reimg";
 
 const Amap = dynamic(() => import("../components/amap/amap"), { ssr: false });
 
@@ -184,9 +185,8 @@ export default function Home() {
         <>
           {realMap ? (
             <Button
-              download={`${currentAdcode}.PNG`}
-              href={canvas?.toDataURL("image/png")}
               onClick={() => {
+                ReImg.fromCanvas(previewCanvas).downloadPng()
                 modal.destroy();
                 let moadl2 = Modal.confirm({
                   title: "导入图片说明",
@@ -203,9 +203,10 @@ export default function Home() {
                       <br />
                       若未开始下载请点击:
                       <a
-                        download={`${currentAdcode}.PNG`}
-                        href={canvas?.toDataURL("image/png")}
                         className={styles.downloadButton}
+                        onClick={() => {
+                          ReImg.fromCanvas(previewCanvas).downloadPng()
+                        }}
                       >
                         手动下载
                       </a>
