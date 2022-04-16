@@ -63,7 +63,7 @@ export default function Home() {
   const amapRef = useRef(); //通过ref调用子组件的方法
 
   useEffect(() => {
-    if (!localStorage.getItem("update")) {
+    if (!localStorage.getItem("update1_1_0")) {
       Modal.confirm({
         title: "更新日志 1.1.0",
         content: (
@@ -80,7 +80,7 @@ export default function Home() {
         okButtonText: "我知道了",
         cancelButtonText: "不再提示",
         onCancel: () => {
-          localStorage.setItem("update", true);
+          localStorage.setItem("update1_1_0", true);
         },
       });
     }
@@ -359,7 +359,7 @@ export default function Home() {
       <Container className={styles.container}>
         <h1>
           TheoTown <br />
-          地图创建工具 <span className={styles.betaSign}>1.0.0</span>
+          地图创建工具 <span className={styles.betaSign}>1.1.0</span>
         </h1>
         <Input
           value={name}
