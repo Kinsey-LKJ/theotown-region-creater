@@ -95,5 +95,8 @@
 @media only screen and (max-width: 768px) {
   .previewModal {
     height: calc(100vh - 64px);
+    min-height: -webkit-fill-available;
+    padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }

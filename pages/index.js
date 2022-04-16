@@ -13,7 +13,7 @@ import styles from "../styles/Home.module.css";
 import Switch from "../components/switch/switch";
 import dynamic from "next/dynamic";
 
-import {saveAs} from 'file-saver';
+import { saveAs } from "file-saver";
 
 const Amap = dynamic(() => import("../components/amap/amap"), { ssr: false });
 
@@ -65,22 +65,22 @@ export default function Home() {
   useEffect(() => {
     if (!localStorage.getItem("update")) {
       Modal.confirm({
-        title: "更新日志 1.0.0",
+        title: "更新日志 1.1.0",
         content: (
           <div>
-            1、支持创建全国任意省、市、区县级行政单位的地图，可还原真实的河流、湖泊、海洋等水源。
+            1、修复了部分安卓手机无法下载地图的问题。
             <br />
             <br />
-            2、优化了整体的像素风UI（像素风YYDS）。
+            2、将导出的地图的格式由 .PNG 改为 .png。
             <br />
             <br />
-            3、其他+10086条 bug 修复。
+            3、优化了部分提示文案。
           </div>
         ),
         okButtonText: "我知道了",
         cancelButtonText: "不再提示",
         onCancel: () => {
-          localStorage.setItem('update',true)
+          localStorage.setItem("update", true);
         },
       });
     }
@@ -188,8 +188,8 @@ export default function Home() {
             <Button
               onClick={() => {
                 canvas.toBlob((blob) => {
-                  saveAs(blob, "image.png")
-                })
+                  saveAs(blob, `${currentAdcode}.png`);
+                });
                 modal.destroy();
                 let moadl2 = Modal.confirm({
                   title: "导入图片说明",
@@ -208,7 +208,9 @@ export default function Home() {
                       <a
                         className={styles.downloadButton}
                         onClick={() => {
-
+                          canvas.toBlob((blob) => {
+                            saveAs(blob, `${currentAdcode}.png`);
+                          });
                         }}
                       >
                         手动下载
@@ -317,7 +319,7 @@ export default function Home() {
 
   let code = `cr:${JSON.stringify({
     name: name === "" ? "未命名区域" : name,
-    bmp: realMap ? `/pictures/${currentAdcode}.PNG` : "NULL",
+    bmp: realMap ? `/pictures/${currentAdcode}.png` : "NULL",
     seed: realMap ? "NULL" : seedValue,
     desert: desert,
     terrain: terrain,
@@ -647,7 +649,7 @@ export default function Home() {
                     onClick={() => {
                       Modal.info({
                         content:
-                          "表示一个区域的总大小，1个单位代表游戏中 64格*64格，此项会极大影响游戏的性能，建议不要设置的太高（建议手机用户不要超过32）。",
+                          "表示一个区域的总大小，1个单位代表游戏中 64格*64格，此项会极大影响游戏的性能，建议不要设置的太高（建议手机用户不要超过16，如果手机配置较高可以适当调整的大一点）。",
                         title: "区域大小",
                         okButtonText: "我知道了",
                       });
