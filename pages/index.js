@@ -206,7 +206,7 @@ export default function Home() {
                                 请长按以下图片进行手动保存，
                                 <span className={styles.mainText}>
                                   并把文件命名为
-                                  {currentAdcode}（十分重要！）
+                                  {currentAdcode}，格式为png（小写）
                                 </span>
                                 ：
                                 <img
