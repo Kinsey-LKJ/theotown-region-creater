@@ -196,23 +196,43 @@ export default function Home() {
                   title: "导入图片说明",
                   content: (
                     <>
-                      已开始下载地图，请将下载好的地图放入西奥小镇游戏根目录的
-                      pictures
+                      已开始下载地图（如果未触发自动下载或下载失败，请
+                      <a
+                        onClick={() => {
+                          Modal.info({
+                            title: "手动下载地图提示",
+                            content: (
+                              <>
+                                请长按以下图片进行手动保存，
+                                <span className={styles.mainText}>
+                                  并把文件命名为
+                                  {currentAdcode}（十分重要！）
+                                </span>
+                                ：
+                                <img
+                                  style={{ width: "100%" }}
+                                  src={canvas.toDataURL()}
+                                />
+                              </>
+                            ),
+                            okButtonText: "继续",
+                          });
+                        }}
+                        className={styles.mainText}
+                        style={{
+                          cursor:'pointer'
+                        }}
+                      >
+                        点击进行手动下载
+                      </a>
+                      ），请将下载好的地图放入西奥小镇游戏根目录的 pictures
                       文件夹中，如果找不到对应的文件夹，请手动新建。请不要修改已下载的地图文件的名称。
                       <br /> <br />
-                      iOS 路径：文件App-我的iPhone-TheoTown-pictures
+                      iOS 请放入：文件App-我的iPhone-TheoTown-pictures
                       <br />
-                      Android 路径：设备根目录-TheoTown-pictures
+                      Android 请放入：TheoTown-pictures
                       <br />
                       <br />
-                      若未开始下载请点击:
-                      <a
-                        className={styles.downloadButton}
-                        download={`${currentAdcode}.png`}
-                        href={href}
-                      >
-                        手动下载
-                      </a>
                     </>
                   ),
                   onOk: () => {
@@ -220,7 +240,7 @@ export default function Home() {
                     moadl2.destroy();
                   },
                   okButtonText: "下一步：生成控制台代码",
-                  cancelButtonText: "取消",
+                  cancelButtonText: "上一步",
                 });
               }}
             >

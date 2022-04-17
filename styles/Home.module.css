@@ -61,6 +61,7 @@
   border: 1px solid white;
   box-sizing: border-box;
   z-index: 1;
+  pointer-events: none;
 }
 
 .mapPreviewMapName {
@@ -81,15 +82,15 @@
   position: absolute;
   width: 100%;
   z-index: 0;
+  pointer-events: auto;
 }
 
 .spinModal {
   background: black !important;
 }
 
-.downloadButton {
-  text-decoration-color: var(--theotown-creater-primary);
-  text-decoration-line: underline;
+.mainText {
+  color: var(--theotown-creater-primary);
 }
 
 @media only screen and (max-width: 768px) {
