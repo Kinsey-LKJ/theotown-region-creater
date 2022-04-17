@@ -231,7 +231,9 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
       canvas.id = "IMG";
       setPreviewCanvas(canvas);
       mapRef.current.classList.remove("print");
-      callBack(canvas);
+      canvas.toBlob((blob) => {
+        callBack(canvas,URL.createObjectURL(blob))
+      })
     });
   };
 

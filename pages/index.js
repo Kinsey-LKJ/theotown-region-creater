@@ -13,8 +13,6 @@ import styles from "../styles/Home.module.css";
 import Switch from "../components/switch/switch";
 import dynamic from "next/dynamic";
 
-import { saveAs } from "file-saver";
-
 const Amap = dynamic(() => import("../components/amap/amap"), { ssr: false });
 
 export default function Home() {
@@ -168,7 +166,8 @@ export default function Home() {
     return obj;
   };
 
-  const previewModal = (canvas) => {
+  const previewModal = (canvas, href) => {
+    console.log();
     let modal = Modal.confirm({
       title: "预览",
       // onOk: () => {
@@ -186,10 +185,12 @@ export default function Home() {
         <>
           {realMap ? (
             <Button
+              download={`${currentAdcode}.png`}
+              href={href}
               onClick={() => {
-                canvas.toBlob((blob) => {
-                  saveAs(blob, `${currentAdcode}.png`);
-                });
+                // canvas.toBlob((blob) => {
+                //   saveAs(blob, `${currentAdcode}.png`);
+                // });
                 modal.destroy();
                 let moadl2 = Modal.confirm({
                   title: "导入图片说明",
@@ -207,11 +208,8 @@ export default function Home() {
                       若未开始下载请点击:
                       <a
                         className={styles.downloadButton}
-                        onClick={() => {
-                          canvas.toBlob((blob) => {
-                            saveAs(blob, `${currentAdcode}.png`);
-                          });
-                        }}
+                        download={`${currentAdcode}.png`}
+                        href={href}
                       >
                         手动下载
                       </a>
@@ -751,9 +749,9 @@ export default function Home() {
                 content: "正在生成地图...",
                 maskClassName: styles.spinModal,
               });
-              amapRef.current((canvas) => {
+              amapRef.current((canvas, blob) => {
                 moadl.destroy();
-                previewModal(canvas);
+                previewModal(canvas, blob);
               });
             } else {
               previewModal();
