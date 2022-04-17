@@ -201,10 +201,10 @@ export default function Home() {
                               <>
                                 请长按以下图片进行手动保存，
                                 <span className={styles.mainText}>
-                                  并把文件命名为
-                                  {currentAdcode}，格式为png（小写）
+                                  并一定要把文件命名为
+                                  {currentAdcode}，格式为png（小写），并放入西奥小镇游戏根目录中的 pictures 文件夹中
                                 </span>
-                                ：
+                                <br />
                                 <img
                                   style={{ width: "100%" }}
                                   src={canvas.toDataURL()}
