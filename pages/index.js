@@ -61,24 +61,20 @@ export default function Home() {
   const amapRef = useRef(); //通过ref调用子组件的方法
 
   useEffect(() => {
-    if (!localStorage.getItem("update1_1_0")) {
+    if (!localStorage.getItem("update1_1_1")) {
       Modal.confirm({
-        title: "更新日志 1.1.0",
+        title: "更新日志 1.1.1",
         content: (
           <div>
-            1、修复了部分安卓手机无法下载地图的问题。
+            1、增加了地图的手动下载功能。
             <br />
             <br />
-            2、将导出的地图的格式由 .PNG 改为 .png。
-            <br />
-            <br />
-            3、优化了部分提示文案。
           </div>
         ),
         okButtonText: "我知道了",
         cancelButtonText: "不再提示",
         onCancel: () => {
-          localStorage.setItem("update1_1_0", true);
+          localStorage.setItem("update1_1_1", true);
         },
       });
     }
@@ -377,7 +373,7 @@ export default function Home() {
       <Container className={styles.container}>
         <h1>
           TheoTown <br />
-          地图创建工具 <span className={styles.betaSign}>1.1.0</span>
+          地图创建工具 <span className={styles.betaSign}>1.1.1</span>
         </h1>
         <Input
           value={name}
