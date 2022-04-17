@@ -222,9 +222,10 @@ export default function Home() {
                         点击进行手动下载
                       </a>
                       ），请将下载好的地图放入西奥小镇游戏根目录的 pictures
-                      文件夹中，如果找不到对应的文件夹，请手动新建。请不要修改已下载的地图文件的名称。
+                      文件夹中，如果找不到对应的文件夹，请手动新建。
                       <br /> <br />
                       iOS 请放入：文件App-我的iPhone-TheoTown-pictures
+                      <br />
                       <br />
                       Android 请放入：TheoTown-pictures
                       <br />
