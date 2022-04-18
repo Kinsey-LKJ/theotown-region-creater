@@ -241,12 +241,54 @@ export default function Home() {
                       如果在对应的目录没有找到 pictures 文件夹，请手动新建。
                     </div>
                   ),
-                  onOk: () => {
-                    setModalOpen(true);
-                    moadl2.destroy();
-                  },
-                  okButtonText: "下一步：生成控制台代码",
-                  cancelButtonText: "上一步",
+                  footer: (
+                    <>
+                      <Button
+                        onClick={() => {
+                          setModalOpen(true);
+                          moadl2.destroy();
+                        }}
+                      >
+                        下一步：从控制台创建地图
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          moadl2.destroy();
+                          Modal.confirm({
+                            title: "温馨提示",
+                            content: (
+                              <>
+                                你选择了通过游戏自带的地图创建工具来创建地图，因游戏自带创建工具的限制，除了所选择的真实地图数据以外，你刚刚所设置的
+                                <span className={styles.mainText}>
+                                  地图尺寸及地图的装饰、树木等配置将失效
+                                </span>
+                                。请在游戏中打开创建地图的界面，并
+                                <span className={styles.mainText}>
+                                  点击文件夹按钮（在骰子旁边的那个），然后选择刚刚下载的图片
+                                </span>
+                                即可，如果你想创建较大的地图，则只能通过控制台创建噢。
+                              </>
+                            ),
+                            okButtonText: "我知道了",
+                            cancelButtonText: "我想通过控制台创建地图",
+                            onCancel: () => {
+                              setModalOpen(true);
+                            },
+                          });
+                        }}
+                      >
+                        下一步：从游戏自带工具创建地图
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          moadl2.destroy();
+                        }}
+                        type="secondary"
+                      >
+                        取消
+                      </Button>
+                    </>
+                  ),
                 });
               }}
             >
