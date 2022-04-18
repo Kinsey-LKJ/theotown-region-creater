@@ -258,15 +258,17 @@ export default function Home() {
                             title: "温馨提示",
                             content: (
                               <>
-                                你选择了通过游戏自带的地图创建工具来创建地图，因游戏自带创建工具的限制，除了所选择的真实地图数据以外，你刚刚所设置的
-                                <span className={styles.mainText}>
-                                  地图尺寸及地图的装饰、树木等配置将失效
-                                </span>
-                                （想要以上配置生效，只能通过控制台创建）。请在游戏中打开创建地图的界面，并
+                                请在游戏中打开创建地图的界面，并
                                 <span className={styles.mainText}>
                                   点击文件夹按钮（在骰子旁边的那个），然后选择刚刚下载的图片
                                 </span>
                                 即可。
+                                <br />
+                                因游戏自带创建工具的限制，除了所选择的真实地图数据以外，你刚刚所设置的
+                                <span className={styles.mainText}>
+                                  地图尺寸及地图的装饰、树木等配置将失效
+                                </span>
+                                （想要以上配置生效，只能通过控制台创建）。
                               </>
                             ),
                             okButtonText: "我知道了",
