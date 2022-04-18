@@ -48,6 +48,7 @@ export default function Home() {
   const [name, setNameValue] = useState("");
   const [seedValue, setSeedValue] = useState("");
   const [desert, setDesert] = useState(false);
+  const [snow, setSnow] = useState(false);
   const [terrain, setTerrain] = useState(false);
   const [trees, setTrees] = useState(false);
   const [decoration, setDecoration] = useState(false);
@@ -61,21 +62,25 @@ export default function Home() {
   const amapRef = useRef(); //通过ref调用子组件的方法
 
   useEffect(() => {
-    if (!localStorage.getItem("update1_1_2")) {
+    if (!localStorage.getItem("update1_1_3")) {
       Modal.confirm({
-        title: "更新日志 1.1.2",
+        title: "更新日志 1.1.3",
         content: (
           <div>
             1、增加了地图的手动下载功能。
             <br />
+            <br />
             2、优化了地图导入的说明文案。
+            <br />
+            <br />
+            3、增加了雪地控制功能（默认为不生成雪地）。
             <br />
           </div>
         ),
         okButtonText: "我知道了",
         cancelButtonText: "不再提示",
         onCancel: () => {
-          localStorage.setItem("update1_1_2", true);
+          localStorage.setItem("update1_1_3", true);
         },
       });
     }
@@ -192,8 +197,8 @@ export default function Home() {
                 let moadl2 = Modal.confirm({
                   title: "导入图片说明",
                   content: (
-                    <>
-                      已开始下载地图（如果未触发自动下载或下载失败，请
+                    <div style={{ wordBreak: "break-word" }}>
+                      已开始下载地图（如果下载失败，请
                       <a
                         onClick={() => {
                           Modal.info({
@@ -203,7 +208,8 @@ export default function Home() {
                                 请长按以下图片进行手动保存，
                                 <span className={styles.mainText}>
                                   并一定要把文件命名为
-                                  {currentAdcode}，格式为png（小写），并放入指定文件夹中。
+                                  {currentAdcode}
+                                  ，格式为png（小写），并放入指定文件夹中。
                                 </span>
                                 <br />
                                 <img
@@ -217,21 +223,23 @@ export default function Home() {
                         }}
                         className={styles.mainText}
                         style={{
-                          cursor:'pointer'
+                          cursor: "pointer",
                         }}
                       >
-                        点击进行手动下载
+                        点击手动下载
                       </a>
-                      ），请将下载好的地图放入西奥小镇游戏根目录的 pictures
-                      文件夹中，并保证文件名为{currentAdcode}，如果找不到 pictures 文件夹，请手动新建。
+                      ），请将下载好的地图放入以下目录，并保证文件名为
+                      {currentAdcode}：
                       <br /> <br />
                       iOS 请放入：文件App/我的iPhone/TheoTown/pictures
                       <br />
                       <br />
-                      Android 请放入：Android/data/info.flowersoft.theotown.theotown/files/pictures
+                      Android
+                      请放入：Android/data/info.flowersoft.theotown.theotown/files/pictures
                       <br />
                       <br />
-                    </>
+                      如果在对应的目录没有找到 pictures 文件夹，请手动新建。
+                    </div>
                   ),
                   onOk: () => {
                     setModalOpen(true);
@@ -323,6 +331,8 @@ export default function Home() {
 
           <div>沙漠:{desert ? "开启" : "关闭"}</div>
 
+          <div>雪地:{snow ? "开启" : "关闭"}</div>
+
           <div>地形:{terrain ? "开启" : "关闭"}</div>
 
           <div>树木:{trees ? "开启" : "关闭"}</div>
@@ -338,6 +348,7 @@ export default function Home() {
     bmp: realMap ? `/pictures/${currentAdcode}.png` : "NULL",
     seed: realMap ? "NULL" : seedValue,
     desert: desert,
+    snow: snow,
     terrain: terrain,
     trees: trees,
     decoration: decoration,
@@ -375,7 +386,7 @@ export default function Home() {
       <Container className={styles.container}>
         <h1>
           TheoTown <br />
-          地图创建工具 <span className={styles.betaSign}>1.1.2</span>
+          地图创建工具 <span className={styles.betaSign}>1.1.3</span>
         </h1>
         <Input
           value={name}
@@ -504,6 +515,9 @@ export default function Home() {
         <div className={styles.checkBoxs}>
           <CheckBox checked={trees} onChange={setTrees}>
             开启树木
+          </CheckBox>
+          <CheckBox checked={snow} onChange={setSnow}>
+            开启雪地
           </CheckBox>
           <CheckBox checked={decoration} onChange={setDecoration}>
             开启装饰
