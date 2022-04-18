@@ -61,20 +61,21 @@ export default function Home() {
   const amapRef = useRef(); //通过ref调用子组件的方法
 
   useEffect(() => {
-    if (!localStorage.getItem("update1_1_1")) {
+    if (!localStorage.getItem("update1_1_2")) {
       Modal.confirm({
-        title: "更新日志 1.1.1",
+        title: "更新日志 1.1.2",
         content: (
           <div>
             1、增加了地图的手动下载功能。
             <br />
+            2、优化了地图导入的说明文案。
             <br />
           </div>
         ),
         okButtonText: "我知道了",
         cancelButtonText: "不再提示",
         onCancel: () => {
-          localStorage.setItem("update1_1_1", true);
+          localStorage.setItem("update1_1_2", true);
         },
       });
     }
@@ -202,7 +203,7 @@ export default function Home() {
                                 请长按以下图片进行手动保存，
                                 <span className={styles.mainText}>
                                   并一定要把文件命名为
-                                  {currentAdcode}，格式为png（小写），并放入西奥小镇游戏根目录中的 pictures 文件夹中
+                                  {currentAdcode}，格式为png（小写），并放入指定文件夹中。
                                 </span>
                                 <br />
                                 <img
@@ -374,7 +375,7 @@ export default function Home() {
       <Container className={styles.container}>
         <h1>
           TheoTown <br />
-          地图创建工具 <span className={styles.betaSign}>1.1.1</span>
+          地图创建工具 <span className={styles.betaSign}>1.1.2</span>
         </h1>
         <Input
           value={name}
