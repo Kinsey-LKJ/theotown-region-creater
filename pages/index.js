@@ -62,25 +62,19 @@ export default function Home() {
   const amapRef = useRef(); //通过ref调用子组件的方法
 
   useEffect(() => {
-    if (!localStorage.getItem("update1_1_3")) {
+    if (!localStorage.getItem("update1_1_4")) {
       Modal.confirm({
-        title: "更新日志 1.1.3",
+        title: "更新日志 1.1.4",
         content: (
           <div>
-            1、增加了地图的手动下载功能。
-            <br />
-            <br />
-            2、优化了地图导入的说明文案。
-            <br />
-            <br />
-            3、增加了雪地控制功能（默认为不生成雪地）。
+            1、修复了部分提示文案。
             <br />
           </div>
         ),
         okButtonText: "我知道了",
         cancelButtonText: "不再提示",
         onCancel: () => {
-          localStorage.setItem("update1_1_3", true);
+          localStorage.setItem("update1_1_4", true);
         },
       });
     }
@@ -859,7 +853,7 @@ export default function Home() {
                                 title: "复制成功!",
                                 content: `请粘贴到西奥小镇中的控制台中，并点击运行按钮，等待提示“ Region ${
                                   name ? name : "未命名区域"
-                                } successfully created. You have to restart to see any effect. ” 后即为成功，重启游戏后即可看到你的地图。如果在执行代码时出现闪退，有极大概率创建地图出错了，请将区域大小调笑或将城市大小调大，然后重新尝试一下。`,
+                                } successfully created. You have to restart to see any effect. ” 后即为成功，重启游戏后即可看到你的地图。如果在执行代码时出现闪退，有极大概率创建地图出错了，请将区域大小调小或将城市大小调大，然后重新尝试一下。`,
                               });
                               setModalOpen(false);
                             }}
@@ -883,7 +877,7 @@ export default function Home() {
                       title: "复制成功!",
                       content: `请粘贴到西奥小镇中的控制台中，并点击运行按钮，等待提示“ Region ${
                         name ? name : "未命名区域"
-                      } successfully created. You have to restart to see any effect. ” 后即为成功，重启游戏后即可看到你的地图。如果在执行代码时出现闪退，有极大概率创建地图出错了，请将区域大小调笑或将城市大小调大，然后重新尝试一下。`,
+                      } successfully created. You have to restart to see any effect. ” 后即为成功，重启游戏后即可看到你的地图。如果在执行代码时出现闪退，有极大概率创建地图出错了，请将区域大小调小或将城市大小调大，然后重新尝试一下。`,
                     });
                     setModalOpen(false);
                   }}
