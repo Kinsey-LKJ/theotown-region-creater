@@ -104,6 +104,7 @@ export default function Home() {
         content: (
           <div>
             1、增加了捐赠按钮，开发不易，如果觉得好用，可以请作者喝杯咖啡。
+            <br />
             2、优化了弹窗的内容的可读性。
             <br />
           </div>
