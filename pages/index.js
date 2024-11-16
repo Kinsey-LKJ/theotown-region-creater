@@ -112,7 +112,7 @@ export default function Home() {
         okButtonText: "我知道了",
         cancelButtonText: "不再提示",
         onCancel: () => {
-          localStorage.setItem("update1_1_4", true);
+          localStorage.setItem("update1_1_5", true);
         },
       });
     }
