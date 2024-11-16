@@ -15,6 +15,42 @@ import dynamic from "next/dynamic";
 
 const Amap = dynamic(() => import("../components/amap/amap"), { ssr: false });
 
+const DonateModalContent = () => {
+  return (
+    <div>
+      为爱发电需要持续承担服务器、域名等费用，如果此工具对你有帮助，可以请我喝杯咖啡，感谢！
+      <div
+        style={{
+          margin: "16px 0",
+        }}
+      >
+        <Image
+          src={"/wechat.jpg"}
+          alt="微信支付"
+          width={828}
+          height={1124}
+          style={{ display: "block", width: "100%" }}
+        />
+        <Image
+          src={"/alipay.jpg"}
+          alt="支付宝"
+          width={1780}
+          height={2560}
+          style={{ display: "block", width: "100%" }}
+        />
+      </div>
+      <div
+        style={{
+          color: "#fe4e4e",
+          marginBottom: 16,
+        }}
+      >
+        未成年人请勿打赏，请勿进行大额打赏。
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
   // useEffect(() => {
   //   Modal.info({
@@ -62,12 +98,13 @@ export default function Home() {
   const amapRef = useRef(); //通过ref调用子组件的方法
 
   useEffect(() => {
-    if (!localStorage.getItem("update1_1_4")) {
+    if (!localStorage.getItem("update1_1_5")) {
       Modal.confirm({
-        title: "更新日志 1.1.4",
+        title: "更新日志 1.1.5",
         content: (
           <div>
-            1、修复了部分提示文案。
+            1、增加了捐赠按钮，开发不易，如果觉得好用，可以请作者喝杯咖啡。
+            2、优化了弹窗的内容的可读性。
             <br />
           </div>
         ),
@@ -190,6 +227,7 @@ export default function Home() {
                 modal.destroy();
                 let moadl2 = Modal.confirm({
                   title: "导入图片说明",
+                  contentClassName: styles.largeModal,
                   content: (
                     <div style={{ wordBreak: "break-word" }}>
                       已开始下载地图（如果下载失败，请
@@ -248,8 +286,9 @@ export default function Home() {
                       <Button
                         onClick={() => {
                           moadl2.destroy();
-                          Modal.confirm({
+                          const modal3 = Modal.confirm({
                             title: "温馨提示",
+                            contentClassName: styles.largeModal,
                             content: (
                               <>
                                 请在游戏中打开创建地图的界面，并
@@ -267,9 +306,40 @@ export default function Home() {
                             ),
                             okButtonText: "我知道了",
                             cancelButtonText: "我想通过控制台创建地图",
-                            onCancel: () => {
-                              setModalOpen(true);
-                            },
+                            footer: (
+                              <>
+                                <Button
+                                  onClick={() => {
+                                    modal3.destroy();
+                                  }}
+                                  type="secondary"
+                                >
+                                  我知道了
+                                </Button>
+                                <Button
+                                  onClick={() => {
+                                    setModalOpen(true);
+                                    modal3.destroy();
+                                  }}
+                                  type="secondary"
+                                >
+                                  我想通过控制台创建地图
+                                </Button>
+                                <Button
+                                  onClick={() => {
+                                    modal3.destroy();
+                                    Modal.info({
+                                      title: "开发不易，打赏随意",
+                                      contentClassName: styles.largeModal,
+                                      okButtonText: "我知道了",
+                                      content: <DonateModalContent />,
+                                    });
+                                  }}
+                                >
+                                  捐赠
+                                </Button>
+                              </>
+                            ),
                           });
                         }}
                       >
@@ -311,7 +381,7 @@ export default function Home() {
           </Button>
         </>
       ),
-      contentClassName: styles.previewModal,
+      contentClassName: styles.largeModal,
       content: (
         <div
           style={{
@@ -424,7 +494,7 @@ export default function Home() {
       <Container className={styles.container}>
         <h1>
           TheoTown <br />
-          地图创建工具 <span className={styles.betaSign}>1.1.4</span>
+          地图创建工具 <span className={styles.betaSign}>1.1.5</span>
         </h1>
         <Input
           value={name}
@@ -873,13 +943,39 @@ export default function Home() {
               <CopyToClipboard text={code}>
                 <Button
                   onClick={() => {
-                    Modal.info({
+                    const moadl = Modal.confirm({
                       title: "复制成功!",
                       content: `请粘贴到西奥小镇中的控制台中，并点击运行按钮，等待提示“ Region ${
                         name ? name : "未命名区域"
                       } successfully created. You have to restart to see any effect. ” 后即为成功，重启游戏后即可看到你的地图。如果在执行代码时出现闪退，有极大概率创建地图出错了，请将区域大小调小或将城市大小调大，然后重新尝试一下。`,
+                      footer: (
+                        <>
+                          <Button
+                            type="secondary"
+                            onClick={() => {
+                              moadl.destroy();
+                              setModalOpen(false);
+                            }}
+                          >
+                            我知道了
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              moadl.destroy();
+                              setModalOpen(false);
+                              Modal.info({
+                                title: "开发不易，打赏随意",
+                                contentClassName: styles.largeModal,
+                                okButtonText: "我知道了",
+                                content: <DonateModalContent />,
+                              });
+                            }}
+                          >
+                            捐赠
+                          </Button>
+                        </>
+                      ),
                     });
-                    setModalOpen(false);
                   }}
                 >
                   复制代码到剪贴板
@@ -909,7 +1005,21 @@ export default function Home() {
         >
           Hello
         </Modal>
+        <Button
+          type="secondary"
+          onClick={() => {
+            Modal.info({
+              title: "开发不易，打赏随意",
+              contentClassName: styles.largeModal,
+              okButtonText: "我知道了",
+              content: <DonateModalContent />,
+            });
+          }}
+        >
+          捐赠
+        </Button>
       </Container>
+
       <div>问题反馈: kinsey@lkj.design</div>
     </div>
   );
