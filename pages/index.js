@@ -98,12 +98,28 @@ export default function Home() {
   const amapRef = useRef(); //通过ref调用子组件的方法
 
   useEffect(() => {
-    if (!localStorage.getItem("update1_1_5")) {
-      Modal.confirm({
-        title: "更新日志 1.1.5",
+    if (!localStorage.getItem("update1_1_6")) {
+      const log = Modal.confirm({
+        title: "更新日志 1.1.6",
         content: (
           <div>
-            1、增加了捐赠按钮，开发不易，如果觉得好用，可以请作者喝杯咖啡。
+            1、增加了
+            <span
+            
+              style={{ textDecoration: "underline" }}
+              onClick={() => {
+                log.destroy();
+                Modal.info({
+                  title: "开发不易，打赏随意",
+                  contentClassName: styles.largeModal,
+                  okButtonText: "我知道了",
+                  content: <DonateModalContent />,
+                });
+              }}
+            >
+              捐赠入口
+            </span>
+            ，开发不易，如果觉得好用，可以请开发者喝杯咖啡。
             <br />
             2、优化了弹窗的内容的可读性。
             <br />
@@ -112,7 +128,7 @@ export default function Home() {
         okButtonText: "我知道了",
         cancelButtonText: "不再提示",
         onCancel: () => {
-          localStorage.setItem("update1_1_5", true);
+          localStorage.setItem("update1_1_6", true);
         },
       });
     }
@@ -495,7 +511,7 @@ export default function Home() {
       <Container className={styles.container}>
         <h1>
           TheoTown <br />
-          地图创建工具 <span className={styles.betaSign}>1.1.5</span>
+          地图创建工具 <span className={styles.betaSign}>1.1.6</span>
         </h1>
         <Input
           value={name}
