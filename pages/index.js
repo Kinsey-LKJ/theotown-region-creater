@@ -25,14 +25,14 @@ const DonateModalContent = () => {
         }}
       >
         <Image
-          src={"/wechat.jpg"}
+          src={"/wechat-donate.jpg"}
           alt="微信支付"
           width={828}
           height={1124}
           style={{ display: "block", width: "100%" }}
         />
         <Image
-          src={"/alipay.jpg"}
+          src={"/alipay-donate.jpg"}
           alt="支付宝"
           width={1780}
           height={2560}
