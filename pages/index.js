@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import Button from "../components/button/button";
 import CheckBox from "../components/checkbox/checkbox";
 import Container from "../components/container/container";
+import Select from "../components/select/select";
 import Input from "../components/input/input";
 import Modal from "../components/modal/modal";
 import Slider from "../components/slider/slider";
@@ -94,41 +95,31 @@ export default function Home() {
   const [previewCanvas, setPreviewCanvas] = useState(null);
   const [realMap, setRealMap] = useState(null);
   const [currentAdcode, setCurrentAdcode] = useState("theo-image");
+  const [platform, setPlatform] = useState(null);
 
   const amapRef = useRef(); //通过ref调用子组件的方法
 
   useEffect(() => {
-    if (!localStorage.getItem("update1_1_6")) {
+    if (!localStorage.getItem("update1_2")) {
       const log = Modal.confirm({
-        title: "更新日志 1.1.6",
+        title: "更新日志 1.2",
         content: (
           <div>
-            1、增加了
-            <span
-            
-              style={{ textDecoration: "underline" }}
-              onClick={() => {
-                log.destroy();
-                Modal.info({
-                  title: "开发不易，打赏随意",
-                  contentClassName: styles.largeModal,
-                  okButtonText: "我知道了",
-                  content: <DonateModalContent />,
-                });
-              }}
-            >
-              捐赠入口
-            </span>
-            ，开发不易，如果觉得好用，可以请开发者喝杯咖啡。
+            2025-02-16
             <br />
-            2、优化了弹窗的内容的可读性。
+            1、增加了 Steam 平台的地图导入指引。
             <br />
+            2、优化了地图导入指引的整体逻辑。
+            <br />
+            3、修改部份文案，使其更符合直觉。
+            <br />
+            4、修复了 Switch 组件的样式偏移问题。
           </div>
         ),
         okButtonText: "我知道了",
         cancelButtonText: "不再提示",
         onCancel: () => {
-          localStorage.setItem("update1_1_6", true);
+          localStorage.setItem("update1_2", true);
         },
       });
     }
@@ -243,7 +234,7 @@ export default function Home() {
                 // });
                 modal.destroy();
                 let moadl2 = Modal.confirm({
-                  title: "导入图片说明",
+                  title: "下载地图",
                   contentClassName: styles.largeModal,
                   content: (
                     <div style={{ wordBreak: "break-word" }}>
@@ -277,52 +268,79 @@ export default function Home() {
                       >
                         点击手动下载
                       </a>
-                      ），请将下载好的地图放入以下目录，并保证文件名为
-                      {currentAdcode}：
-                      <br /> <br />
-                      iOS 请放入：文件App/我的iPhone/TheoTown/pictures
+                      ）。
+                      {platform !== "Steam" ? (
+                        <>
+                          <br />
+                          请将下载好的地图放入以下目录，并保证文件名为
+                          {currentAdcode}.png
+                          <br />
+                          <br />
+                        </>
+                      ) : (
+                        <>
+                          <br />
+                          下载完成后，请点击“下一步”
+                        </>
+                      )}
+                      {platform === "iOS"
+                        ? "地址为：文件App/我的iPhone/TheoTown/pictures"
+                        : platform === "Android"
+                        ? "地址为：Android/data/info.flowersoft.theotown.theotown/files/pictures"
+                        : ""}
                       <br />
                       <br />
-                      Android
-                      请放入：Android/data/info.flowersoft.theotown.theotown/files/pictures
-                      <br />
-                      <br />
-                      如果在对应的目录没有找到 pictures 文件夹，请手动新建。
+                      {platform !== "Steam"
+                        ? "如果在对应的目录没有找到 pictures 文件夹，请手动新建。"
+                        : ""}
                     </div>
                   ),
                   footer: (
                     <>
-                      <Button
-                        onClick={() => {
-                          setModalOpen(true);
-                          moadl2.destroy();
-                        }}
-                      >
-                        下一步：从控制台创建地图
-                      </Button>
+                      {platform !== "Steam" ? (
+                        <>
+                          {" "}
+                          <Button
+                            onClick={() => {
+                              setModalOpen(true);
+                              moadl2.destroy();
+                            }}
+                          >
+                            下一步：从控制台导入地图
+                          </Button>
+                          <div style={{textAlign: "center"}}>或</div>
+                        </>
+                      ) : null}
+
                       <Button
                         onClick={() => {
                           moadl2.destroy();
                           const modal3 = Modal.confirm({
-                            title: "温馨提示",
+                            title: "导入地图到游戏中",
                             contentClassName: styles.largeModal,
                             content: (
                               <>
-                                请在游戏中打开创建地图的界面，并
-                                <span className={styles.mainText}>
-                                  点击文件夹按钮（在骰子旁边的那个），然后选择刚刚下载的图片
-                                </span>
-                                即可。
+                                请按照以下步骤将下载好的地图导入到游戏中：
                                 <br />
-                                因游戏自带创建工具的限制，除了所选择的真实地图数据以外，你刚刚所设置的
+                                <br />
                                 <span className={styles.mainText}>
-                                  地图尺寸及地图的装饰、树木等配置将失效
+                                  在游戏中点击“创建区域”-{">"}
+                                  点击“文件夹”按钮-{">"}选择刚刚下载的图片-{">"}
+                                  点击地形-{">"}关闭山坡地形即可
                                 </span>
-                                （想要以上配置生效，只能通过控制台创建）。
+                                <br />
+                                <br />
+                                请务必关闭山坡地形，因为会导致导入的地图高度异常。
+                                <br />
+                                <br />
+                                请注意，除了所选择的真实地图数据以外，你刚刚所设置
+                                <span className={styles.mainText}>
+                                  地图尺寸及地图的装饰、树木等配置将失效，建议在游戏自带工具中自行进行更丰富的调整。
+                                </span>
                               </>
                             ),
                             okButtonText: "我知道了",
-                            cancelButtonText: "我想通过控制台创建地图",
+                            cancelButtonText: "我想通过控制台导入地图",
                             footer: (
                               <>
                                 <Button
@@ -333,15 +351,19 @@ export default function Home() {
                                 >
                                   我知道了
                                 </Button>
-                                <Button
-                                  onClick={() => {
-                                    setModalOpen(true);
-                                    modal3.destroy();
-                                  }}
-                                  type="secondary"
-                                >
-                                  我想通过控制台创建地图
-                                </Button>
+
+                                {/* {platform !== "Steam" ? (
+                                  <Button
+                                    onClick={() => {
+                                      setModalOpen(true);
+                                      modal3.destroy();
+                                    }}
+                                    type="secondary"
+                                  >
+                                    我想通过控制台导入地图
+                                  </Button>
+                                ) : null} */}
+
                                 <Button
                                   onClick={() => {
                                     modal3.destroy();
@@ -360,7 +382,9 @@ export default function Home() {
                           });
                         }}
                       >
-                        下一步：从游戏自带工具创建地图
+                        {platform === "Steam"
+                          ? "下一步"
+                          : "下一步：从游戏自带工具导入地图"}
                       </Button>
                       <Button
                         onClick={() => {
@@ -511,7 +535,7 @@ export default function Home() {
       <Container className={styles.container}>
         <h1>
           TheoTown <br />
-          地图创建工具 <span className={styles.betaSign}>1.1.6</span>
+          地图创建工具 <span className={styles.betaSign}>1.2</span>
         </h1>
         <Input
           value={name}
@@ -691,9 +715,7 @@ export default function Home() {
                   content: (
                     <div>
                       当开启单一城市后，一个区域将会只包含一个城市，也就是区域大小等于城市大小，通过此项设置，你可以获得一个非常大的城市，甚至可以超过最大单个城市为
-                      512 * 512 的限制。 目前能够成功创建的最大单个城市大小为
-                      26（1664格 * 1664格），测试机型为 iPhone 13
-                      Pro，如果你成功生成了更大的单个城市，请联系我，我会将最高记录更新成你的。
+                      512 * 512 的限制。
                     </div>
                   ),
                   title: "单一城市",
@@ -899,8 +921,30 @@ export default function Home() {
           ></Slider>
         )}
 
+        {realMap ? (
+          <Select
+            data={[
+              { label: "iOS", value: "iOS" },
+              { label: "Android", value: "Android" },
+              { label: "Steam", value: "Steam" },
+            ]}
+            onChange={(value) => {
+              setPlatform(value);
+            }}
+            placeholder="请选择游戏平台"
+          ></Select>
+        ) : (
+          ""
+        )}
+
         <Button
           onClick={() => {
+            if (!platform && realMap) {
+              Modal.warning({
+                content: "请先选择游戏平台",
+              });
+              return;
+            }
             if (realMap) {
               let moadl = Modal.spin({
                 content: "正在生成地图...",
