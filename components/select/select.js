@@ -28,7 +28,6 @@ const Select = ({data, defaultValue = null ,placeholder="请选择",onChange=() 
     if (selectRef.current.contains(e.target)) {
       return;
     }
-    console.log(1);
     setIsOpen(false);
   };
 

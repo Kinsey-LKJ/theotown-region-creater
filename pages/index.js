@@ -208,7 +208,6 @@ export default function Home() {
   };
 
   const previewModal = (canvas, href) => {
-    console.log();
     let modal = Modal.confirm({
       title: "预览",
       // onOk: () => {
@@ -1081,7 +1080,7 @@ export default function Home() {
         </Button>
       </Container>
 
-      <div>问题反馈: kinsey@lkj.design</div>
+      <div>问题反馈: <a href="https://github.com/kinseyjs/theotown-region-creater/issues" target="_blank">GitHub Issues</a></div>
     </div>
   );
 }

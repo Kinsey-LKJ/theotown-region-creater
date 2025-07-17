@@ -1,7 +1,19 @@
 {
   "name": "theotown-region-creater",
   "version": "1.1.4",
-  "private": true,
+  "description": "A web-based tool for creating region maps for TheoTown game using Amap data",
+  "keywords": ["theotown", "map", "region", "creator", "amap", "game"],
+  "author": "Kinsey",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kinseyjs/theotown-region-creater.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kinseyjs/theotown-region-creater/issues"
+  },
+  "homepage": "https://github.com/kinseyjs/theotown-region-creater#readme",
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -33,5 +45,9 @@
   "devDependencies": {
     "eslint": "8.10.0",
     "eslint-config-next": "12.1.0"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
   }
 }

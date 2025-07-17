@@ -36,7 +36,6 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
 
   useEffect(() => {
     if (currentProvince) {
-      console.log(currentProvince);
       setCityData(provinceObjectData[currentProvince].districts);
 
       if (currentCity) {
@@ -55,23 +54,29 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
   }, [currentCity]);
 
   useEffect(() => {
-    console.log(level);
+    // Level change handler for debugging
   }, [level]);
 
   useEffect(() => {
     async function fetchData() {
       let response = await fetch(
-        `https://restapi.amap.com/v3/config/district?keywords=100000&subdistrict=3&key=055f82816293ca4e556985a97adca86d`
+        `/api/amap-districts?keywords=100000&subdistrict=3`
       );
       if (response.ok) {
         let json = await response.json();
-        console.log(
-          json.districts[0].districts.map((item) => {
-            item.label = item.name;
-            item.value = item.adcode;
-            return item;
-          })
-        );
+        
+        // 检查数据是否有效
+        if (!json.districts || !json.districts[0] || !json.districts[0].districts) {
+          console.error('API返回的数据格式不正确:', json);
+          return;
+        }
+        
+        // Process district data
+        json.districts[0].districts.map((item) => {
+          item.label = item.name;
+          item.value = item.adcode;
+          return item;
+        });
 
         let data = json.districts[0].districts.map((province, i) => {
           province.label = province.name;
@@ -117,7 +122,6 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
             });
           });
         });
-        console.log(obj);
         setProvinceObjectData(obj);
       } else {
         alert("HTTP-Error: " + response.status);
@@ -127,11 +131,18 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
     fetchData();
   }, []);
   useEffect(() => {
-    window._AMapSecurityConfig = {
-      securityJsCode: "f5f0c7954ad742866e7e6d80892e7a19",
-    };
-    AMapLoader.load({
-      key: "644c303dbe63e503adc809a83ea54d76",
+    async function initializeMap() {
+      try {
+        // 从服务器端获取安全配置
+        const configResponse = await fetch('/api/amap-config');
+        const config = await configResponse.json();
+        
+        window._AMapSecurityConfig = {
+          securityJsCode: config.securityCode,
+        };
+        
+        AMapLoader.load({
+          key: config.webKey,
       plugins: ["AMap.DistrictLayer"],
     })
       .then((AMap) => {
@@ -165,8 +176,14 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
         setAMAP(AMap);
       })
       .catch((e) => {
-        console.log(e);
+        console.error('高德地图加载失败:', e);
       });
+      } catch (error) {
+        console.error('获取地图配置失败:', error);
+      }
+    }
+    
+    initializeMap();
   }, []);
 
   useEffect(() => {
@@ -188,11 +205,11 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
         map.remove(province);
       }
 
-      console.log(adcode);
+      // Process adcode change
 
       async function fetchData() {
         let response = await fetch(
-          `https://restapi.amap.com/v3/config/district?keywords=${adcode}&subdistrict=0&key=055f82816293ca4e556985a97adca86d`
+          `/api/amap-districts?adcode=${adcode}`
         );
         if (response.ok) {
           let json = await response.json();
@@ -213,8 +230,7 @@ function Amap({ setPreviewCanvas, amapRef, setCurrentAdcode }) {
             })
           );
 
-          console.log(json.districts[0].center);
-          console.log(json.districts[0].center.split(","));
+          // Set map center based on district data
 
           map.setCenter(json.districts[0].center.split(","));
         } else {
