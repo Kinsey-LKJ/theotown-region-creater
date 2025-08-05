@@ -1080,7 +1080,7 @@ export default function Home() {
         </Button>
       </Container>
 
-      <div>问题反馈: <a href="https://github.com/kinseyjs/theotown-region-creater/issues" target="_blank" rel="noreferrer">GitHub Issues</a></div>
+      <div>问题反馈: kinsey@lkj.design</div>
     </div>
   );
 }

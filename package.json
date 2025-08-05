@@ -7,12 +7,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kinseyjs/theotown-region-creater.git"
+    "url": "https://github.com/Kinsey-LKJ/theotown-region-creater.git"
   },
   "bugs": {
-    "url": "https://github.com/kinseyjs/theotown-region-creater/issues"
+    "url": "https://github.com/Kinsey-LKJ/theotown-region-creater/issues"
   },
-  "homepage": "https://github.com/kinseyjs/theotown-region-creater#readme",
+  "homepage": "https://github.com/Kinsey-LKJ/theotown-region-creater#readme",
   "private": false,
   "scripts": {
     "dev": "next dev",
